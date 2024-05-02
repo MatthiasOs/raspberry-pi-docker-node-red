@@ -17,21 +17,24 @@ Pi in docker Gruppe hinzufügen, dass man Container starten kann als pi user:
 ```
 sudo usermod -aG docker pi
 ```
+TODO: Wieso muss man dann bei den docker Befehlen im Anschluss noch "sudo" davor schreiben?
 
 ## nore-red Container starten
 https://nodered.org/docs/getting-started/docker
 ```
 sudo docker run -d --restart unless-stopped -p 1880:1880 -v node_red_data:/data --name mynodered nodered/node-red
 ```
+```
 -d = detached (keine logs on der aktuellen shell)
--it = attached (man sieht alles in der aktuellen shell, kann diese aber nicht mehr verwenden 
+-it = attached (man sieht alles in der aktuellen shell, kann diese aber nicht mehr verwenden
+```
 
 Kontrolle ob der Container läuft:
 ```
 docker ps
 docker volume ls
 ```
-Im Browser die IP+port 1880 an surfen -> nore-red ist erreichbar
+Im Browser die IP+port 1880 an surfen (zB 192.168.178.40:1800) -> nore-red ist erreichbar
 
 Zum Beenden des Containers:
 ```
@@ -53,7 +56,7 @@ sudo nmtui
 ```
 (Manuell müsste es auch gehen, dann muss man eine "<Wifi-Name>.nmconnection" Datei anlegen, siehe https://forums.raspberrypi.com/viewtopic.php?t=360175)
 
-# Mittels node-red einen Balkonwechselrichter als weiter externen Genrator einrichten
+# Mittels node-red einen Balkonwechselrichter als externen PV-Erzeuger einrichten
 Damit die PV Erzeugung im Fornius Portal auch einen weiteren Balkonwechselrichter berücksichtigt, man man diese manuell dem Fronius Wechselrichter mitteilen.
 
 Es gibt dafür zwei Wege, entweder mit OpenDTU einen GEN24 Energiezähler im Netzwerk simulieren, dann holt sich Fronius die Daten selbst ab (https://github.com/AloisKlingler/OpenDTU-FroniusSM-MB/).
