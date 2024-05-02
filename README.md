@@ -47,16 +47,22 @@ sudo systemctl enable containerd.service
 (Der Container wird immer gestartet wenn docker gestartet wird, wenn "--restart unless-stopped" mitgegeben wurde)
 
 ## WLAN
-Damit das RaspberryPi sich direkt mit einem WLAN verbindet, welches an dem Ort vorhanden ist, wo man das RaspberryPi verwenden will, muss man es vorher mit dem NetworkManager einrichten:
-https://raspberrytips.com/raspberry-pi-wifi-setup/#set-up-your-wifi-on-raspberry-pi-os-lite
+Damit das RaspberryPi sich direkt mit einem WLAN verbindet, welches an dem Ort vorhanden ist, wo man es verwenden will, muss man die Verbindung vorher [mit dem NetworkManager einrichten](https://raspberrytips.com/raspberry-pi-wifi-setup/#set-up-your-wifi-on-raspberry-pi-os-lite):
 ```
 sudo nmtui
 ```
-Dann manuell das WLAN der Remote Location eingeben.
-Manuell müsste es auch gehen, dann muss man eine "<Wifi-Name>.nmconnection" Datei anlegen, siehe https://forums.raspberrypi.com/viewtopic.php?t=360175
+(Manuell müsste es auch gehen, dann muss man eine "<Wifi-Name>.nmconnection" Datei anlegen, siehe https://forums.raspberrypi.com/viewtopic.php?t=360175)
 
-## nore-red flow importieren
-Flow von https://discourse.nodered.org/t/simulate-a-modbus-tcp-server-and-feed-registers/78763 kopieren und anpassen.
+# Mittels node-red einen Balkonwechselrichter als weiter externen Genrator einrichten
+Damit die PV Erzeugung im Fornius Portal auch einen weiteren Balkonwechselrichter berücksichtigt, man man diese manuell dem Fronius Wechselrichter mitteilen.
+
+Es gibt dafür zwei Wege, entweder mit OpenDTU einen GEN24 Energiezähler im Netzwerk simulieren, dann holt sich Fronius die Daten selbst ab (https://github.com/AloisKlingler/OpenDTU-FroniusSM-MB/).
+Oder die Werte in die korrekten Modbus Register des Fronius schreiben.
+Mit node-red kommt nur der letzte Weg in Frage.
+
+Es wird also in node-red ein flow benötigt, der die PV Erzeugungsdaten der Balkonwechselrichter (AC Power value (Total) [W]", "Total Watt Hours Exportet [Wh]" und "Total Watt Hours Imported [Wh]") zuerst ausliest, die Daten in die korrekte Form bringt und dann per Modbus in die entsprechenden Register des Fronius Wechselrichter schreibt.
+
+In node-red den [flow.json](flow.json) ([Quelle](https://discourse.nodered.org/t/simulate-a-modbus-tcp-server-and-feed-registers/78763)) importieren
 - IP Adresse von Shelly anpassen 
 - IP Adresse von Fronius Wechselrichter anpassen
 - ???
