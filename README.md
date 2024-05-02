@@ -54,7 +54,7 @@ Damit das RaspberryPi sich direkt mit einem WLAN verbindet, welches an dem Ort v
 ```
 sudo nmtui
 ```
-(Manuell müsste es auch gehen, dann muss man eine "<Wifi-Name>.nmconnection" Datei anlegen, siehe https://forums.raspberrypi.com/viewtopic.php?t=360175)
+(Manuell müsste es auch gehen, dann muss man eine "\<Wifi-Name\>.nmconnection" Datei anlegen, siehe https://forums.raspberrypi.com/viewtopic.php?t=360175)
 
 # Mittels node-red einen Balkonwechselrichter als externen PV-Erzeuger einrichten
 Damit die PV Erzeugung im Fornius Portal auch einen weiteren Balkonwechselrichter berücksichtigt, muss man diese manuell dem Fronius Wechselrichter mitteilen.
