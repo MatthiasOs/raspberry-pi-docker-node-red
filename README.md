@@ -8,7 +8,7 @@ sudo curl -fsSL https://get.docker.com -o get-docker.sh
 sudo sh get-docker.sh
 ```
 
- In der console prüfen ob es funktioniert hat:
+In der console prüfen ob es funktioniert hat:
 ```
 docker
 ```
@@ -34,7 +34,7 @@ Kontrolle ob der Container läuft:
 docker ps
 docker volume ls
 ```
-Im Browser die IP+port 1880 an surfen (zB 192.168.178.40:1800) -> nore-red ist erreichbar
+Im Browser die IP+port 1880 an surfen (zB 192.168.178.40:1800) -> node-red ist erreichbar
 
 Zum Beenden des Containers:
 ```
@@ -42,12 +42,12 @@ sudo docker rm -f mynodered
 ```
 
 ## docker Einstellungen
-Damit beim Start des Pi docker gestartet wird:
+Damit beim Start (boot) des Pi auch docker automatisch gestartet wird:
 ```
 sudo systemctl enable docker.service
 sudo systemctl enable containerd.service
 ```
-(Der Container wird immer gestartet wenn docker gestartet wird, wenn "--restart unless-stopped" mitgegeben wurde)
+(Der node-red Container wird immer gestartet wenn docker gestartet wird, wenn "--restart unless-stopped" mitgegeben wurde)
 
 ## WLAN
 Damit das RaspberryPi sich direkt mit einem WLAN verbindet, welches an dem Ort vorhanden ist, wo man es verwenden will, muss man die Verbindung vorher [mit dem NetworkManager einrichten](https://raspberrytips.com/raspberry-pi-wifi-setup/#set-up-your-wifi-on-raspberry-pi-os-lite):
@@ -65,6 +65,11 @@ Mit node-red kommt nur der letzte Weg in Frage.
 
 Es wird also in node-red ein flow benötigt, der die PV Erzeugungsdaten der Balkonwechselrichter (AC Power value (Total) [W]", "Total Watt Hours Exportet [Wh]" und "Total Watt Hours Imported [Wh]") zuerst ausliest, die Daten in die korrekte Form bringt und dann per Modbus in die entsprechenden Register des Fronius Wechselrichter schreibt.
 
+## Dependecies installieren
+- node-red-contrib-shelly (zum Auslesen der PV Erzeugung von einem Shelly)
+- node-red-contrib-modbus (zum Schreiben der Daten mittels Modbus in den Fronius Wechselrichter)
+
+## Flow importieren
 In node-red den [flow.json](flow.json) ([Quelle](https://discourse.nodered.org/t/simulate-a-modbus-tcp-server-and-feed-registers/78763)) importieren
 - IP Adresse von Shelly anpassen 
 - IP Adresse von Fronius Wechselrichter anpassen
