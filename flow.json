@@ -1,0 +1,294 @@
+[
+	{
+		"id": "eb56533ecf4f4f3c",
+		"type": "modbus-flex-write",
+		"z": "eecddba75d36c6cd",
+		"name": "",
+		"showStatusActivities": true,
+		"showErrors": true,
+		"server": "5a03de1d4dae16b8",
+		"emptyMsgOnFail": false,
+		"keepMsgProperties": false,
+		"x": 2290,
+		"y": 200,
+		"wires": [
+			[],
+			[]
+		]
+	},
+	{
+		"id": "f3b87e2c7eabb3bd",
+		"type": "inject",
+		"z": "eecddba75d36c6cd",
+		"name": "",
+		"props": [],
+		"repeat": "",
+		"crontab": "",
+		"once": false,
+		"onceDelay": 0.1,
+		"topic": "",
+		"x": 1790,
+		"y": 200,
+		"wires": [
+			[
+				"6551034b0284c63e"
+			]
+		]
+	},
+	{
+		"id": "6551034b0284c63e",
+		"type": "function",
+		"z": "eecddba75d36c6cd",
+		"name": "Write Headers to 4x0000 (quicker)",
+		"func": "const registers = [40000, 40001, 40002, 40003, 40004, 40005, 40006, 40007, 40008, 40009,\n    40010, 40011, 40012, 40013, 40014, 40015, 40016, 40017, 40018, 40019,\n    40020, 40021, 40022, 40023, 40024, 40025, 40026, 40027, 40028, 40029,\n    40030, 40031, 40032, 40033, 40034, 40035, 40036, 40037, 40038, 40039,\n    40040, 40041, 40042, 40043, 40044, 40045, 40046, 40047, 40048, 40049,\n    40050, 40051, 40052, 40053, 40054, 40055, 40056, 40057, 40058, 40059,\n    40060, 40061, 40062, 40063, 40064, 40065, 40066, 40067, 40068, 40069,\n    40070, 40071, 40072, 40073, 40074, 40075, 40076, 40077, 40078, 40079,\n    40080, 40081, 40082, 40083, 40084, 40085, 40086, 40087, 40088, 40089,\n    40090, 40091, 40092, 40093, 40094, 40095, 40096, 40097, 40098, 40099,\n    40100, 40101, 40102, 40103, 40104, 40105, 40106, 40107, 40108, 40109,\n    40110, 40111, 40112, 40113, 40114, 40115, 40116, 40117, 40118, 40119,\n    40120, 40121, 40122, 40123, 40124, 40125, 40126, 40127, 40128, 40129,\n    40130, 40131, 40132, 40133, 40134, 40135, 40136, 40137, 40138, 40139,\n    40140, 40141, 40142, 40143, 40144, 40145, 40146, 40147, 40148, 40149,\n    40150, 40151, 40152, 40153, 40154, 40155, 40156, 40157, 40158, 40159,\n    40160, 40161, 40162, 40163, 40164, 40165, 40166, 40167, 40168, 40169,\n    40170, 40171, 40172, 40173, 40174, 40175, 40176, 40177, 40178, 40179,\n    40180, 40181, 40182, 40183, 40184, 40185, 40186, 40187, 40188, 40189,\n    40190, 40191, 40192, 40193, 40194, 40195, 40196, 40197 ];\n\nconst values = [21365, 28243, 1, 65, 18034, 28526, 26997, 29440, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    21357, 24946, 29728, 19813, 29797, 29216, 21587, 8246, 13633, 11571, \n    0, 0, 0, 0, 0, 0, 15472, 29289, 28001, 29305,\n    15872, 0, 0, 0, 12590, 13056, 0, 0, 0, 0,\n    0, 0, 13111, 13111, 13111, 12851, 13360, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 204, 213,\n    124, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 65535, 0 ]\n\nconst reg1 = registers.map(reg => reg - 40000)\nconst reg2 = reg1.splice(100)\nconst values2 = values.splice(100)\n\nconst p1 = {\n    'value': values,\n    'fc': 16,\n    'unitid': 1,\n    'address': reg1,\n    'quantity': values.length\n}\nconst p2 = {\n    'value': values2,\n    'fc': 16,\n    'unitid': 1,\n    'address': reg2,\n    'quantity': values2.length\n}\n\nnode.send({payload: p1})\nnode.send({payload: p2})\n",
+		"outputs": 1,
+		"noerr": 0,
+		"initialize": "",
+		"finalize": "",
+		"libs": [],
+		"x": 2040,
+		"y": 200,
+		"wires": [
+			[
+				"eb56533ecf4f4f3c"
+			]
+		]
+	},
+	{
+		"id": "f4e2a505c51b636e",
+		"type": "modbus-flex-getter",
+		"z": "eecddba75d36c6cd",
+		"name": "",
+		"showStatusActivities": false,
+		"showErrors": false,
+		"logIOActivities": false,
+		"server": "5a03de1d4dae16b8",
+		"useIOFile": false,
+		"ioFile": "",
+		"useIOForPayload": false,
+		"emptyMsgOnFail": false,
+		"keepMsgProperties": false,
+		"x": 2010,
+		"y": 320,
+		"wires": [
+			[
+				"c05ef2bcd9f15d19"
+			],
+			[]
+		]
+	},
+	{
+		"id": "2c0401832b4e68a9",
+		"type": "inject",
+		"z": "eecddba75d36c6cd",
+		"name": "get 40000:10",
+		"props": [
+			{
+				"p": "payload"
+			}
+		],
+		"repeat": "",
+		"crontab": "",
+		"once": false,
+		"onceDelay": 0.1,
+		"topic": "",
+		"payload": "{\"fc\":3,\"unitid\":1,\"address\":0,\"quantity\":10}",
+		"payloadType": "json",
+		"x": 1810,
+		"y": 340,
+		"wires": [
+			[
+				"f4e2a505c51b636e"
+			]
+		]
+	},
+	{
+		"id": "c05ef2bcd9f15d19",
+		"type": "function",
+		"z": "eecddba75d36c6cd",
+		"name": "compare first 10",
+		"func": "const expectedValues = [21365, 28243, 1, 65, 18034, 28526, 26997, 29440, 0, 0]\nconst data = msg.payload\nlet result = '✅ Data matches'\nif (Array.isArray(data) == false) {\n    result = `Data Read not an array`\n} else if (data.length != expectedValues.length) {\n    result = `Data Read Length is ${data.length}. Expected ${expectedValues.length}`\n} else {\n    for (let index = 0; index < data.length; index++) {\n        const expected = expectedValues[index];\n        const readData = data[index];\n        if (expected !== readData) {\n            result = `Data at register ${40000 + index} is ${readData}. Expected ${expected}`\n            break\n        }\n    }\n}\nmsg.payload = {\n    result: result,\n    readData: data,\n    expected: expectedValues\n}\nreturn msg\n",
+		"outputs": 1,
+		"noerr": 0,
+		"initialize": "",
+		"finalize": "",
+		"libs": [],
+		"x": 2240,
+		"y": 320,
+		"wires": [
+			[
+				"2d5e5b1b1f33b9fb"
+			]
+		]
+	},
+	{
+		"id": "2d5e5b1b1f33b9fb",
+		"type": "debug",
+		"z": "eecddba75d36c6cd",
+		"name": "debug 192",
+		"active": true,
+		"tosidebar": true,
+		"console": false,
+		"tostatus": true,
+		"complete": "payload",
+		"targetType": "msg",
+		"statusVal": "payload",
+		"statusType": "auto",
+		"x": 2250,
+		"y": 380,
+		"wires": []
+	},
+	{
+		"id": "941ffc08d2760e77",
+		"type": "inject",
+		"z": "eecddba75d36c6cd",
+		"name": "",
+		"props": [],
+		"repeat": "",
+		"crontab": "",
+		"once": false,
+		"onceDelay": 0.1,
+		"topic": "",
+		"x": 1790,
+		"y": 240,
+		"wires": [
+			[
+				"d1e725ef2283421f"
+			]
+		]
+	},
+	{
+		"id": "d1e725ef2283421f",
+		"type": "function",
+		"z": "eecddba75d36c6cd",
+		"name": "Clear headers",
+		"func": "\nconst ninetyNineZeros = []\nninetyNineZeros.length = 99\nninetyNineZeros.fill(0)\n\nconst p1 = {\n    'value': ninetyNineZeros,\n    'fc': 16,\n    'unitid': 1,\n    'address': 0,\n    'quantity': ninetyNineZeros.length\n}\nconst p2 = {\n    'value': ninetyNineZeros,\n    'fc': 16,\n    'unitid': 1,\n    'address': 99,\n    'quantity': ninetyNineZeros.length\n}\n\nconst p3 = {\n    'value': ninetyNineZeros,\n    'fc': 16,\n    'unitid': 1,\n    'address': 40000,\n    'quantity': ninetyNineZeros.length\n}\nconst p4 = {\n    'value': ninetyNineZeros,\n    'fc': 16,\n    'unitid': 1,\n    'address': 40099,\n    'quantity': ninetyNineZeros.length\n}\n\nnode.send({payload: p1})\nnode.send({payload: p2})\nnode.send({payload: p3})\nnode.send({payload: p4})\n",
+		"outputs": 1,
+		"noerr": 0,
+		"initialize": "",
+		"finalize": "",
+		"libs": [],
+		"x": 1980,
+		"y": 240,
+		"wires": [
+			[
+				"eb56533ecf4f4f3c"
+			]
+		]
+	},
+	{
+		"id": "2b5c898486b75fc3",
+		"type": "modbus-server",
+		"z": "eecddba75d36c6cd",
+		"name": "",
+		"logEnabled": true,
+		"hostname": "0.0.0.0",
+		"serverPort": "10512",
+		"responseDelay": 100,
+		"delayUnit": "ms",
+		"coilsBufferSize": 10000,
+		"holdingBufferSize": "41000",
+		"inputBufferSize": 10000,
+		"discreteBufferSize": 10000,
+		"showErrors": true,
+		"x": 2260,
+		"y": 100,
+		"wires": [
+			[],
+			[],
+			[],
+			[],
+			[]
+		]
+	},
+	{
+		"id": "7862a839aa58329c",
+		"type": "function",
+		"z": "eecddba75d36c6cd",
+		"name": "Write Headers to 4400000 (quicker)",
+		"func": "const registers = [40000, 40001, 40002, 40003, 40004, 40005, 40006, 40007, 40008, 40009,\n    40010, 40011, 40012, 40013, 40014, 40015, 40016, 40017, 40018, 40019,\n    40020, 40021, 40022, 40023, 40024, 40025, 40026, 40027, 40028, 40029,\n    40030, 40031, 40032, 40033, 40034, 40035, 40036, 40037, 40038, 40039,\n    40040, 40041, 40042, 40043, 40044, 40045, 40046, 40047, 40048, 40049,\n    40050, 40051, 40052, 40053, 40054, 40055, 40056, 40057, 40058, 40059,\n    40060, 40061, 40062, 40063, 40064, 40065, 40066, 40067, 40068, 40069,\n    40070, 40071, 40072, 40073, 40074, 40075, 40076, 40077, 40078, 40079,\n    40080, 40081, 40082, 40083, 40084, 40085, 40086, 40087, 40088, 40089,\n    40090, 40091, 40092, 40093, 40094, 40095, 40096, 40097, 40098, 40099,\n    40100, 40101, 40102, 40103, 40104, 40105, 40106, 40107, 40108, 40109,\n    40110, 40111, 40112, 40113, 40114, 40115, 40116, 40117, 40118, 40119,\n    40120, 40121, 40122, 40123, 40124, 40125, 40126, 40127, 40128, 40129,\n    40130, 40131, 40132, 40133, 40134, 40135, 40136, 40137, 40138, 40139,\n    40140, 40141, 40142, 40143, 40144, 40145, 40146, 40147, 40148, 40149,\n    40150, 40151, 40152, 40153, 40154, 40155, 40156, 40157, 40158, 40159,\n    40160, 40161, 40162, 40163, 40164, 40165, 40166, 40167, 40168, 40169,\n    40170, 40171, 40172, 40173, 40174, 40175, 40176, 40177, 40178, 40179,\n    40180, 40181, 40182, 40183, 40184, 40185, 40186, 40187, 40188, 40189,\n    40190, 40191, 40192, 40193, 40194, 40195, 40196, 40197 ];\n\nconst values = [21365, 28243, 1, 65, 18034, 28526, 26997, 29440, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    21357, 24946, 29728, 19813, 29797, 29216, 21587, 8246, 13633, 11571, \n    0, 0, 0, 0, 0, 0, 15472, 29289, 28001, 29305,\n    15872, 0, 0, 0, 12590, 13056, 0, 0, 0, 0,\n    0, 0, 13111, 13111, 13111, 12851, 13360, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 204, 213,\n    124, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 65535, 0 ]\n\nconst reg1 = registers.map(reg => reg)\nconst reg2 = reg1.splice(100)\nconst values2 = values.splice(100)\n\nconst p1 = {\n    'value': values,\n    'fc': 16,\n    'unitid': 1,\n    'address': reg1,\n    'quantity': values.length\n}\nconst p2 = {\n    'value': values2,\n    'fc': 16,\n    'unitid': 1,\n    'address': reg2,\n    'quantity': values2.length\n}\n\nnode.send({payload: p1})\nnode.send({payload: p2})\n",
+		"outputs": 1,
+		"noerr": 0,
+		"initialize": "",
+		"finalize": "",
+		"libs": [],
+		"x": 2040,
+		"y": 160,
+		"wires": [
+			[
+				"eb56533ecf4f4f3c"
+			]
+		]
+	},
+	{
+		"id": "c26bbd0680fae5f0",
+		"type": "inject",
+		"z": "eecddba75d36c6cd",
+		"name": "",
+		"props": [],
+		"repeat": "",
+		"crontab": "",
+		"once": false,
+		"onceDelay": 0.1,
+		"topic": "",
+		"x": 1790,
+		"y": 160,
+		"wires": [
+			[
+				"7862a839aa58329c"
+			]
+		]
+	},
+	{
+		"id": "e0092c2bcb4b851f",
+		"type": "inject",
+		"z": "eecddba75d36c6cd",
+		"name": "get 440000:10",
+		"props": [
+			{
+				"p": "payload"
+			}
+		],
+		"repeat": "",
+		"crontab": "",
+		"once": false,
+		"onceDelay": 0.1,
+		"topic": "",
+		"payload": "{\"fc\":3,\"unitid\":1,\"address\":40000,\"quantity\":10}",
+		"payloadType": "json",
+		"x": 1810,
+		"y": 300,
+		"wires": [
+			[
+				"f4e2a505c51b636e"
+			]
+		]
+	},
+	{
+		"id": "5a03de1d4dae16b8",
+		"type": "modbus-client",
+		"name": "myServer 10512",
+		"clienttype": "tcp",
+		"bufferCommands": true,
+		"stateLogEnabled": false,
+		"queueLogEnabled": false,
+		"failureLogEnabled": true,
+		"tcpHost": "127.0.0.1",
+		"tcpPort": "10512",
+		"tcpType": "DEFAULT",
+		"serialPort": "/dev/ttyUSB",
+		"serialType": "RTU-BUFFERD",
+		"serialBaudrate": "9600",
+		"serialDatabits": "8",
+		"serialStopbits": "1",
+		"serialParity": "none",
+		"serialConnectionDelay": "100",
+		"serialAsciiResponseStartDelimiter": "0x3A",
+		"unit_id": "1",
+		"commandDelay": "1",
+		"clientTimeout": "1000",
+		"reconnectOnTimeout": true,
+		"reconnectTimeout": "2000",
+		"parallelUnitIdsAllowed": true
+	}
+]
