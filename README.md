@@ -1,3 +1,6 @@
+# Übersicht der Anwendungen: https://github.com/OliOssi/raspberry-pi-docker-node-red/blob/main/Folie1.JPG 
+
+
 # Wie man ein RaspberryPi mit docker und node-red einrichtet
 
 SD Karte mit `Raspberry Imager` flashen, hier direkt ein WLAN angeben, welches man bei der weiteren Einrichtung verwenden will.
