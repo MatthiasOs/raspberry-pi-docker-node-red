@@ -69,6 +69,12 @@ Siehe [Meter_Register_Map_Float_v1.0.xlsx]
 - [node-red-contrib-modbus](https://flows.nodered.org/node/node-red-contrib-modbus) zum Schreiben der Daten mittels Modbus in den Fronius Wechselrichter
 - [node-red-contrib-buffer-parser](https://flows.nodered.org/node/node-red-contrib-buffer-parser) zum einfachen Konvertieren von Registern zu lesbaren Werten und zurück
 
-## Flow importieren (WORK IN PROGRESS)
-In node-red den [flow.json](flow.json) ([Quelle](https://discourse.nodered.org/t/simulate-a-modbus-tcp-server-and-feed-registers/78763)) importieren
-- ???
+## Node-Red Flow (WORK IN PROGRESS)
+In node-red den [flow.json](flow.json) ([Quelle](https://discourse.nodered.org/t/simulate-a-modbus-tcp-server-and-feed-registers/78763)) importieren, dieser besteht aus drei Teilen.
+- Einem ModbusTCP Server, welcher später als GEN24 Energiezähler im Fronius eingebunden wird.
+- Dem Auslesen der PV Erzeugungsdaten aus dem Shelly
+- Dem Schreiben der Daten in den Modbus Server
+-- einmalig die Daten die benötigt werden für den GEN24 zähler
+-- wiederholt die PV Daten des Shellys
+### Nach dem Import des flows muss noch folgendes gemacht werden:
+- Shelly IP Anpassen
