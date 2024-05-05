@@ -1,4 +1,4 @@
-# Übersicht der Anwendungen: https://github.com/OliOssi/raspberry-pi-docker-node-red/blob/main/Folie1.JPG 
+# Übersicht der Anwendungen: Folie1.JPG 
 
 
 # Wie man ein RaspberryPi mit docker und node-red einrichtet
