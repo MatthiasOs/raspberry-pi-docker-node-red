@@ -1,294 +1,601 @@
 [
-	{
-		"id": "eb56533ecf4f4f3c",
-		"type": "modbus-flex-write",
-		"z": "eecddba75d36c6cd",
-		"name": "",
-		"showStatusActivities": true,
-		"showErrors": true,
-		"server": "5a03de1d4dae16b8",
-		"emptyMsgOnFail": false,
-		"keepMsgProperties": false,
-		"x": 2290,
-		"y": 200,
-		"wires": [
-			[],
-			[]
-		]
-	},
-	{
-		"id": "f3b87e2c7eabb3bd",
-		"type": "inject",
-		"z": "eecddba75d36c6cd",
-		"name": "",
-		"props": [],
-		"repeat": "",
-		"crontab": "",
-		"once": false,
-		"onceDelay": 0.1,
-		"topic": "",
-		"x": 1790,
-		"y": 200,
-		"wires": [
-			[
-				"6551034b0284c63e"
-			]
-		]
-	},
-	{
-		"id": "6551034b0284c63e",
-		"type": "function",
-		"z": "eecddba75d36c6cd",
-		"name": "Write Headers to 4x0000 (quicker)",
-		"func": "const registers = [40000, 40001, 40002, 40003, 40004, 40005, 40006, 40007, 40008, 40009,\n    40010, 40011, 40012, 40013, 40014, 40015, 40016, 40017, 40018, 40019,\n    40020, 40021, 40022, 40023, 40024, 40025, 40026, 40027, 40028, 40029,\n    40030, 40031, 40032, 40033, 40034, 40035, 40036, 40037, 40038, 40039,\n    40040, 40041, 40042, 40043, 40044, 40045, 40046, 40047, 40048, 40049,\n    40050, 40051, 40052, 40053, 40054, 40055, 40056, 40057, 40058, 40059,\n    40060, 40061, 40062, 40063, 40064, 40065, 40066, 40067, 40068, 40069,\n    40070, 40071, 40072, 40073, 40074, 40075, 40076, 40077, 40078, 40079,\n    40080, 40081, 40082, 40083, 40084, 40085, 40086, 40087, 40088, 40089,\n    40090, 40091, 40092, 40093, 40094, 40095, 40096, 40097, 40098, 40099,\n    40100, 40101, 40102, 40103, 40104, 40105, 40106, 40107, 40108, 40109,\n    40110, 40111, 40112, 40113, 40114, 40115, 40116, 40117, 40118, 40119,\n    40120, 40121, 40122, 40123, 40124, 40125, 40126, 40127, 40128, 40129,\n    40130, 40131, 40132, 40133, 40134, 40135, 40136, 40137, 40138, 40139,\n    40140, 40141, 40142, 40143, 40144, 40145, 40146, 40147, 40148, 40149,\n    40150, 40151, 40152, 40153, 40154, 40155, 40156, 40157, 40158, 40159,\n    40160, 40161, 40162, 40163, 40164, 40165, 40166, 40167, 40168, 40169,\n    40170, 40171, 40172, 40173, 40174, 40175, 40176, 40177, 40178, 40179,\n    40180, 40181, 40182, 40183, 40184, 40185, 40186, 40187, 40188, 40189,\n    40190, 40191, 40192, 40193, 40194, 40195, 40196, 40197 ];\n\nconst values = [21365, 28243, 1, 65, 18034, 28526, 26997, 29440, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    21357, 24946, 29728, 19813, 29797, 29216, 21587, 8246, 13633, 11571, \n    0, 0, 0, 0, 0, 0, 15472, 29289, 28001, 29305,\n    15872, 0, 0, 0, 12590, 13056, 0, 0, 0, 0,\n    0, 0, 13111, 13111, 13111, 12851, 13360, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 204, 213,\n    124, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 65535, 0 ]\n\nconst reg1 = registers.map(reg => reg - 40000)\nconst reg2 = reg1.splice(100)\nconst values2 = values.splice(100)\n\nconst p1 = {\n    'value': values,\n    'fc': 16,\n    'unitid': 1,\n    'address': reg1,\n    'quantity': values.length\n}\nconst p2 = {\n    'value': values2,\n    'fc': 16,\n    'unitid': 1,\n    'address': reg2,\n    'quantity': values2.length\n}\n\nnode.send({payload: p1})\nnode.send({payload: p2})\n",
-		"outputs": 1,
-		"noerr": 0,
-		"initialize": "",
-		"finalize": "",
-		"libs": [],
-		"x": 2040,
-		"y": 200,
-		"wires": [
-			[
-				"eb56533ecf4f4f3c"
-			]
-		]
-	},
-	{
-		"id": "f4e2a505c51b636e",
-		"type": "modbus-flex-getter",
-		"z": "eecddba75d36c6cd",
-		"name": "",
-		"showStatusActivities": false,
-		"showErrors": false,
-		"logIOActivities": false,
-		"server": "5a03de1d4dae16b8",
-		"useIOFile": false,
-		"ioFile": "",
-		"useIOForPayload": false,
-		"emptyMsgOnFail": false,
-		"keepMsgProperties": false,
-		"x": 2010,
-		"y": 320,
-		"wires": [
-			[
-				"c05ef2bcd9f15d19"
-			],
-			[]
-		]
-	},
-	{
-		"id": "2c0401832b4e68a9",
-		"type": "inject",
-		"z": "eecddba75d36c6cd",
-		"name": "get 40000:10",
-		"props": [
-			{
-				"p": "payload"
-			}
-		],
-		"repeat": "",
-		"crontab": "",
-		"once": false,
-		"onceDelay": 0.1,
-		"topic": "",
-		"payload": "{\"fc\":3,\"unitid\":1,\"address\":0,\"quantity\":10}",
-		"payloadType": "json",
-		"x": 1810,
-		"y": 340,
-		"wires": [
-			[
-				"f4e2a505c51b636e"
-			]
-		]
-	},
-	{
-		"id": "c05ef2bcd9f15d19",
-		"type": "function",
-		"z": "eecddba75d36c6cd",
-		"name": "compare first 10",
-		"func": "const expectedValues = [21365, 28243, 1, 65, 18034, 28526, 26997, 29440, 0, 0]\nconst data = msg.payload\nlet result = '✅ Data matches'\nif (Array.isArray(data) == false) {\n    result = `Data Read not an array`\n} else if (data.length != expectedValues.length) {\n    result = `Data Read Length is ${data.length}. Expected ${expectedValues.length}`\n} else {\n    for (let index = 0; index < data.length; index++) {\n        const expected = expectedValues[index];\n        const readData = data[index];\n        if (expected !== readData) {\n            result = `Data at register ${40000 + index} is ${readData}. Expected ${expected}`\n            break\n        }\n    }\n}\nmsg.payload = {\n    result: result,\n    readData: data,\n    expected: expectedValues\n}\nreturn msg\n",
-		"outputs": 1,
-		"noerr": 0,
-		"initialize": "",
-		"finalize": "",
-		"libs": [],
-		"x": 2240,
-		"y": 320,
-		"wires": [
-			[
-				"2d5e5b1b1f33b9fb"
-			]
-		]
-	},
-	{
-		"id": "2d5e5b1b1f33b9fb",
-		"type": "debug",
-		"z": "eecddba75d36c6cd",
-		"name": "debug 192",
-		"active": true,
-		"tosidebar": true,
-		"console": false,
-		"tostatus": true,
-		"complete": "payload",
-		"targetType": "msg",
-		"statusVal": "payload",
-		"statusType": "auto",
-		"x": 2250,
-		"y": 380,
-		"wires": []
-	},
-	{
-		"id": "941ffc08d2760e77",
-		"type": "inject",
-		"z": "eecddba75d36c6cd",
-		"name": "",
-		"props": [],
-		"repeat": "",
-		"crontab": "",
-		"once": false,
-		"onceDelay": 0.1,
-		"topic": "",
-		"x": 1790,
-		"y": 240,
-		"wires": [
-			[
-				"d1e725ef2283421f"
-			]
-		]
-	},
-	{
-		"id": "d1e725ef2283421f",
-		"type": "function",
-		"z": "eecddba75d36c6cd",
-		"name": "Clear headers",
-		"func": "\nconst ninetyNineZeros = []\nninetyNineZeros.length = 99\nninetyNineZeros.fill(0)\n\nconst p1 = {\n    'value': ninetyNineZeros,\n    'fc': 16,\n    'unitid': 1,\n    'address': 0,\n    'quantity': ninetyNineZeros.length\n}\nconst p2 = {\n    'value': ninetyNineZeros,\n    'fc': 16,\n    'unitid': 1,\n    'address': 99,\n    'quantity': ninetyNineZeros.length\n}\n\nconst p3 = {\n    'value': ninetyNineZeros,\n    'fc': 16,\n    'unitid': 1,\n    'address': 40000,\n    'quantity': ninetyNineZeros.length\n}\nconst p4 = {\n    'value': ninetyNineZeros,\n    'fc': 16,\n    'unitid': 1,\n    'address': 40099,\n    'quantity': ninetyNineZeros.length\n}\n\nnode.send({payload: p1})\nnode.send({payload: p2})\nnode.send({payload: p3})\nnode.send({payload: p4})\n",
-		"outputs": 1,
-		"noerr": 0,
-		"initialize": "",
-		"finalize": "",
-		"libs": [],
-		"x": 1980,
-		"y": 240,
-		"wires": [
-			[
-				"eb56533ecf4f4f3c"
-			]
-		]
-	},
-	{
-		"id": "2b5c898486b75fc3",
-		"type": "modbus-server",
-		"z": "eecddba75d36c6cd",
-		"name": "",
-		"logEnabled": true,
-		"hostname": "0.0.0.0",
-		"serverPort": "10512",
-		"responseDelay": 100,
-		"delayUnit": "ms",
-		"coilsBufferSize": 10000,
-		"holdingBufferSize": "41000",
-		"inputBufferSize": 10000,
-		"discreteBufferSize": 10000,
-		"showErrors": true,
-		"x": 2260,
-		"y": 100,
-		"wires": [
-			[],
-			[],
-			[],
-			[],
-			[]
-		]
-	},
-	{
-		"id": "7862a839aa58329c",
-		"type": "function",
-		"z": "eecddba75d36c6cd",
-		"name": "Write Headers to 4400000 (quicker)",
-		"func": "const registers = [40000, 40001, 40002, 40003, 40004, 40005, 40006, 40007, 40008, 40009,\n    40010, 40011, 40012, 40013, 40014, 40015, 40016, 40017, 40018, 40019,\n    40020, 40021, 40022, 40023, 40024, 40025, 40026, 40027, 40028, 40029,\n    40030, 40031, 40032, 40033, 40034, 40035, 40036, 40037, 40038, 40039,\n    40040, 40041, 40042, 40043, 40044, 40045, 40046, 40047, 40048, 40049,\n    40050, 40051, 40052, 40053, 40054, 40055, 40056, 40057, 40058, 40059,\n    40060, 40061, 40062, 40063, 40064, 40065, 40066, 40067, 40068, 40069,\n    40070, 40071, 40072, 40073, 40074, 40075, 40076, 40077, 40078, 40079,\n    40080, 40081, 40082, 40083, 40084, 40085, 40086, 40087, 40088, 40089,\n    40090, 40091, 40092, 40093, 40094, 40095, 40096, 40097, 40098, 40099,\n    40100, 40101, 40102, 40103, 40104, 40105, 40106, 40107, 40108, 40109,\n    40110, 40111, 40112, 40113, 40114, 40115, 40116, 40117, 40118, 40119,\n    40120, 40121, 40122, 40123, 40124, 40125, 40126, 40127, 40128, 40129,\n    40130, 40131, 40132, 40133, 40134, 40135, 40136, 40137, 40138, 40139,\n    40140, 40141, 40142, 40143, 40144, 40145, 40146, 40147, 40148, 40149,\n    40150, 40151, 40152, 40153, 40154, 40155, 40156, 40157, 40158, 40159,\n    40160, 40161, 40162, 40163, 40164, 40165, 40166, 40167, 40168, 40169,\n    40170, 40171, 40172, 40173, 40174, 40175, 40176, 40177, 40178, 40179,\n    40180, 40181, 40182, 40183, 40184, 40185, 40186, 40187, 40188, 40189,\n    40190, 40191, 40192, 40193, 40194, 40195, 40196, 40197 ];\n\nconst values = [21365, 28243, 1, 65, 18034, 28526, 26997, 29440, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    21357, 24946, 29728, 19813, 29797, 29216, 21587, 8246, 13633, 11571, \n    0, 0, 0, 0, 0, 0, 15472, 29289, 28001, 29305,\n    15872, 0, 0, 0, 12590, 13056, 0, 0, 0, 0,\n    0, 0, 13111, 13111, 13111, 12851, 13360, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 204, 213,\n    124, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 65535, 0 ]\n\nconst reg1 = registers.map(reg => reg)\nconst reg2 = reg1.splice(100)\nconst values2 = values.splice(100)\n\nconst p1 = {\n    'value': values,\n    'fc': 16,\n    'unitid': 1,\n    'address': reg1,\n    'quantity': values.length\n}\nconst p2 = {\n    'value': values2,\n    'fc': 16,\n    'unitid': 1,\n    'address': reg2,\n    'quantity': values2.length\n}\n\nnode.send({payload: p1})\nnode.send({payload: p2})\n",
-		"outputs": 1,
-		"noerr": 0,
-		"initialize": "",
-		"finalize": "",
-		"libs": [],
-		"x": 2040,
-		"y": 160,
-		"wires": [
-			[
-				"eb56533ecf4f4f3c"
-			]
-		]
-	},
-	{
-		"id": "c26bbd0680fae5f0",
-		"type": "inject",
-		"z": "eecddba75d36c6cd",
-		"name": "",
-		"props": [],
-		"repeat": "",
-		"crontab": "",
-		"once": false,
-		"onceDelay": 0.1,
-		"topic": "",
-		"x": 1790,
-		"y": 160,
-		"wires": [
-			[
-				"7862a839aa58329c"
-			]
-		]
-	},
-	{
-		"id": "e0092c2bcb4b851f",
-		"type": "inject",
-		"z": "eecddba75d36c6cd",
-		"name": "get 440000:10",
-		"props": [
-			{
-				"p": "payload"
-			}
-		],
-		"repeat": "",
-		"crontab": "",
-		"once": false,
-		"onceDelay": 0.1,
-		"topic": "",
-		"payload": "{\"fc\":3,\"unitid\":1,\"address\":40000,\"quantity\":10}",
-		"payloadType": "json",
-		"x": 1810,
-		"y": 300,
-		"wires": [
-			[
-				"f4e2a505c51b636e"
-			]
-		]
-	},
-	{
-		"id": "5a03de1d4dae16b8",
-		"type": "modbus-client",
-		"name": "myServer 10512",
-		"clienttype": "tcp",
-		"bufferCommands": true,
-		"stateLogEnabled": false,
-		"queueLogEnabled": false,
-		"failureLogEnabled": true,
-		"tcpHost": "127.0.0.1",
-		"tcpPort": "10512",
-		"tcpType": "DEFAULT",
-		"serialPort": "/dev/ttyUSB",
-		"serialType": "RTU-BUFFERD",
-		"serialBaudrate": "9600",
-		"serialDatabits": "8",
-		"serialStopbits": "1",
-		"serialParity": "none",
-		"serialConnectionDelay": "100",
-		"serialAsciiResponseStartDelimiter": "0x3A",
-		"unit_id": "1",
-		"commandDelay": "1",
-		"clientTimeout": "1000",
-		"reconnectOnTimeout": true,
-		"reconnectTimeout": "2000",
-		"parallelUnitIdsAllowed": true
-	}
+    {
+        "id": "492ef081ec2a123c",
+        "type": "tab",
+        "label": "Prod",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "29389f9e917216d1",
+        "type": "group",
+        "z": "492ef081ec2a123c",
+        "name": "READ",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "9c84c4360d1f4d99",
+            "9137caadc00449b8",
+            "4b0ca8da2a7ea892",
+            "d808d1fbf87eb05a",
+            "38816e0c7baecfcc"
+        ],
+        "x": 28,
+        "y": 519,
+        "w": 818,
+        "h": 268
+    },
+    {
+        "id": "f8f11dd477e2e9ab",
+        "type": "group",
+        "z": "492ef081ec2a123c",
+        "name": "WRITE",
+        "style": {
+            "label": true,
+            "fill": "#ffbfbf",
+            "stroke": "#ff0000",
+            "fill-opacity": "0"
+        },
+        "nodes": [
+            "8f890ca586af71bb",
+            "db86ce01b2a5ab4d",
+            "853118a6670fbbd0",
+            "e72413e05475353e",
+            "bb113fbc96a9e1bf",
+            "2ca7cb7b47f3b247",
+            "f177e61a1dbb3951",
+            "fbdfd022a6e9970e"
+        ],
+        "x": 28,
+        "y": 139,
+        "w": 1038,
+        "h": 348
+    },
+    {
+        "id": "853118a6670fbbd0",
+        "type": "group",
+        "z": "492ef081ec2a123c",
+        "g": "f8f11dd477e2e9ab",
+        "name": "Einmalig",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "f20bf1b8761b217d",
+            "ad4ffc31c5371b34"
+        ],
+        "x": 54,
+        "y": 279,
+        "w": 452,
+        "h": 82
+    },
+    {
+        "id": "fbdfd022a6e9970e",
+        "type": "group",
+        "z": "492ef081ec2a123c",
+        "g": "f8f11dd477e2e9ab",
+        "name": "Util",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "4bd0805bccafc68d",
+            "96e393905f037d6d"
+        ],
+        "x": 54,
+        "y": 379,
+        "w": 352,
+        "h": 82
+    },
+    {
+        "id": "38816e0c7baecfcc",
+        "type": "group",
+        "z": "492ef081ec2a123c",
+        "g": "29389f9e917216d1",
+        "name": "Test ob die Standardwerte korrekt geschrieben werden",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "809ba98556330c7a",
+            "62104c0fcd23e116",
+            "6c23072af38691ca",
+            "30977765725d2f2e"
+        ],
+        "x": 54,
+        "y": 619,
+        "w": 682,
+        "h": 142
+    },
+    {
+        "id": "e72413e05475353e",
+        "type": "shelly-gen2",
+        "z": "492ef081ec2a123c",
+        "g": "f8f11dd477e2e9ab",
+        "hostname": "192.168.0.40",
+        "description": "PV-Inverter",
+        "mode": "polling",
+        "server": "",
+        "outputmode": "event",
+        "uploadretryinterval": 5000,
+        "pollinginterval": "1000",
+        "pollstatus": true,
+        "getstatusoncommand": true,
+        "devicetype": "Relay",
+        "outputs": 1,
+        "x": 330,
+        "y": 220,
+        "wires": [
+            [
+                "2ca7cb7b47f3b247",
+                "f177e61a1dbb3951"
+            ]
+        ]
+    },
+    {
+        "id": "bb113fbc96a9e1bf",
+        "type": "inject",
+        "z": "492ef081ec2a123c",
+        "g": "f8f11dd477e2e9ab",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 220,
+        "wires": [
+            [
+                "e72413e05475353e"
+            ]
+        ]
+    },
+    {
+        "id": "f177e61a1dbb3951",
+        "type": "debug",
+        "z": "492ef081ec2a123c",
+        "g": "f8f11dd477e2e9ab",
+        "name": "PV",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 550,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "62104c0fcd23e116",
+        "type": "modbus-flex-getter",
+        "z": "492ef081ec2a123c",
+        "g": "38816e0c7baecfcc",
+        "name": "",
+        "showStatusActivities": true,
+        "showErrors": true,
+        "showWarnings": true,
+        "logIOActivities": false,
+        "server": "0ed293f9e2365360",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": true,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 370,
+        "y": 660,
+        "wires": [
+            [
+                "809ba98556330c7a",
+                "6c23072af38691ca"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "809ba98556330c7a",
+        "type": "function",
+        "z": "492ef081ec2a123c",
+        "g": "38816e0c7baecfcc",
+        "name": "compare first 10",
+        "func": "const expectedValues = [21365, 28243, 1, 65, 18034, 28526, 26997, 29440, 0, 0]\nconst data = msg.payload\nlet result = '✅ Data matches'\nif (Array.isArray(data) == false) {\n    result = `Data Read not an array`\n} else if (data.length != expectedValues.length) {\n    result = `Data Read Length is ${data.length}. Expected ${expectedValues.length}`\n} else {\n    for (let index = 0; index < data.length; index++) {\n        const expected = expectedValues[index];\n        const readData = data[index];\n        if (expected !== readData) {\n            result = `Data at register ${40000 + index} is ${readData}. Expected ${expected}`\n            break\n        }\n    }\n}\nmsg.payload = {\n    result: result,\n    readData: data,\n    expected: expectedValues\n}\nreturn msg\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 630,
+        "y": 660,
+        "wires": [
+            [
+                "6c23072af38691ca"
+            ]
+        ]
+    },
+    {
+        "id": "6c23072af38691ca",
+        "type": "debug",
+        "z": "492ef081ec2a123c",
+        "g": "38816e0c7baecfcc",
+        "name": "Check",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 610,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "30977765725d2f2e",
+        "type": "inject",
+        "z": "492ef081ec2a123c",
+        "g": "38816e0c7baecfcc",
+        "name": "get 440000:10",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"fc\":3,\"unitid\":3,\"address\":40000,\"quantity\":10}",
+        "payloadType": "json",
+        "x": 170,
+        "y": 660,
+        "wires": [
+            [
+                "62104c0fcd23e116"
+            ]
+        ]
+    },
+    {
+        "id": "4bd0805bccafc68d",
+        "type": "inject",
+        "z": "492ef081ec2a123c",
+        "g": "fbdfd022a6e9970e",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 150,
+        "y": 420,
+        "wires": [
+            [
+                "96e393905f037d6d"
+            ]
+        ]
+    },
+    {
+        "id": "96e393905f037d6d",
+        "type": "function",
+        "z": "492ef081ec2a123c",
+        "g": "fbdfd022a6e9970e",
+        "name": "Clear headers",
+        "func": "\nconst ninetyNineZeros = []\nninetyNineZeros.length = 99\nninetyNineZeros.fill(0)\n\nconst p1 = {\n    'value': ninetyNineZeros,\n    'fc': 16,\n    'unitid': 3,\n    'address': 0,\n    'quantity': ninetyNineZeros.length\n}\nconst p2 = {\n    'value': ninetyNineZeros,\n    'fc': 16,\n    'unitid': 3,\n    'address': 99,\n    'quantity': ninetyNineZeros.length\n}\n\nconst p3 = {\n    'value': ninetyNineZeros,\n    'fc': 16,\n    'unitid': 3,\n    'address': 40000,\n    'quantity': ninetyNineZeros.length\n}\nconst p4 = {\n    'value': ninetyNineZeros,\n    'fc': 16,\n    'unitid': 3,\n    'address': 40099,\n    'quantity': ninetyNineZeros.length\n}\n\nnode.send({payload: p1})\nnode.send({payload: p2})\nnode.send({payload: p3})\nnode.send({payload: p4})\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 420,
+        "wires": [
+            [
+                "8f890ca586af71bb"
+            ]
+        ]
+    },
+    {
+        "id": "8f890ca586af71bb",
+        "type": "modbus-flex-write",
+        "z": "492ef081ec2a123c",
+        "g": "f8f11dd477e2e9ab",
+        "name": "",
+        "showStatusActivities": true,
+        "showErrors": true,
+        "showWarnings": true,
+        "server": "0ed293f9e2365360",
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 770,
+        "y": 320,
+        "wires": [
+            [
+                "db86ce01b2a5ab4d"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "c8608bcc341cb4cc",
+        "type": "comment",
+        "z": "492ef081ec2a123c",
+        "name": "Modbus Register Quelle",
+        "info": "https://www.fronius.com/QR-link/0006\n\nIMMER 1 weniger!\nAlso zB für \"Modbus Device Address\" 40069 aus dem Excel\nmuss Register 40068 abgefragt werden!\n",
+        "x": 130,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "f20bf1b8761b217d",
+        "type": "function",
+        "z": "492ef081ec2a123c",
+        "g": "853118a6670fbbd0",
+        "name": "Write Registers",
+        "func": "const registers = [40000, 40001, 40002, 40003, 40004, 40005, 40006, 40007, 40008, 40009,\n    40010, 40011, 40012, 40013, 40014, 40015, 40016, 40017, 40018, 40019,\n    40020, 40021, 40022, 40023, 40024, 40025, 40026, 40027, 40028, 40029,\n    40030, 40031, 40032, 40033, 40034, 40035, 40036, 40037, 40038, 40039,\n    40040, 40041, 40042, 40043, 40044, 40045, 40046, 40047, 40048, 40049,\n    40050, 40051, 40052, 40053, 40054, 40055, 40056, 40057, 40058, 40059,\n    40060, 40061, 40062, 40063, 40064, 40065, 40066, 40067, 40068, 40069,\n    40070, 40071, 40072, 40073, 40074, 40075, 40076, 40077, 40078, 40079,\n    40080, 40081, 40082, 40083, 40084, 40085, 40086, 40087, 40088, 40089,\n    40090, 40091, 40092, 40093, 40094, 40095, 40096, 40097, 40098, 40099,\n    40100, 40101, 40102, 40103, 40104, 40105, 40106, 40107, 40108, 40109,\n    40110, 40111, 40112, 40113, 40114, 40115, 40116, 40117, 40118, 40119,\n    40120, 40121, 40122, 40123, 40124, 40125, 40126, 40127, 40128, 40129,\n    40130, 40131, 40132, 40133, 40134, 40135, 40136, 40137, 40138, 40139,\n    40140, 40141, 40142, 40143, 40144, 40145, 40146, 40147, 40148, 40149,\n    40150, 40151, 40152, 40153, 40154, 40155, 40156, 40157, 40158, 40159,\n    40160, 40161, 40162, 40163, 40164, 40165, 40166, 40167, 40168, 40169,\n    40170, 40171, 40172, 40173, 40174, 40175, 40176, 40177, 40178, 40179,\n    40180, 40181, 40182, 40183, 40184, 40185, 40186, 40187, 40188, 40189,\n    40190, 40191, 40192, 40193, 40194, 40195, 40196, 40197 ];\n\n\nconst values = [\n    //SunSpec Modbus Map = 0x53756e53 ('SunS')\n    21365, 28243, \n    //SunSpec Common Model block = \"1\"\n    1, \n    //Length of Common Model block = \"65\"\n    65, \n    //Manufacturer = \"Fronius\"\n    18034, 28526, 26997, 29440, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, \n    //Device model\n    21357, 24946, 29728, 19813, 29797, 29216, 21587, 8246, 13633, 11571, 0, 0, 0, 0, 0, 0, \n    //Options = \"<primary>\"\"\n    15472, 29289, 28001, 29305, 15872, 0, 0, 0, \n    //SW version of meter = \"1.3\"\n    12590, 13056, 0, 0, 0, 0, 0, 0, \n    //Serialnumber of the meter = \"2242372340\"\n    13111, 13111, 13111, 12851, 13360, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    //Modbus Device Address\n    204, \n    // SunSpec Meter Modbus Map (float); 211: single phase, 212: split phase, 213: three phase\n    213,\n    //Length of inverter model block = 124\n    124, \n\n    //Smart Meter Data >>>\n    //AC Total Current value\n    0, 0, \n    //AC Phase-A Current value\n    0, 0, \n    //AC Phase-B Current value\n    0, 0, \n    //AC Phase-C Current value\n    0, 0, \n    //AC Voltage Average Phase-to-neutral value\n    0, 0, \n    //AC Voltage Phase-A-to-neutral value\n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0,\n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, 0, \n    0, //TODO WIESO IST DAS HIER ALLEIN, das müsste immer paare sein?\n    //<<< Smart Meter Data\n\n    //Identifies this as End block = 0xFFFF\n    65535, \n    //Length of model block = 0\n    0 ]\n\nconst reg1 = registers.map(reg => reg)\nconst reg2 = reg1.splice(100)\nconst values2 = values.splice(100)\n\nconst p1 = {\n    'value': values,\n    'fc': 16,\n    'unitid': 1,\n    'address': reg1,\n    'quantity': values.length\n}\nconst p2 = {\n    'value': values2,\n    'fc': 16,\n    'unitid': 1,\n    'address': reg2,\n    'quantity': values2.length\n}\n\nnode.send({ payload: p1 })\nnode.send({ payload: p2 })",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 320,
+        "wires": [
+            [
+                "8f890ca586af71bb"
+            ]
+        ]
+    },
+    {
+        "id": "ad4ffc31c5371b34",
+        "type": "inject",
+        "z": "492ef081ec2a123c",
+        "g": "853118a6670fbbd0",
+        "name": "Write Modbus Data",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "topic": "",
+        "x": 190,
+        "y": 320,
+        "wires": [
+            [
+                "f20bf1b8761b217d"
+            ]
+        ]
+    },
+    {
+        "id": "db86ce01b2a5ab4d",
+        "type": "debug",
+        "z": "492ef081ec2a123c",
+        "g": "f8f11dd477e2e9ab",
+        "name": "Write",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 970,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "10b43c9f9d5448dc",
+        "type": "modbus-server",
+        "z": "492ef081ec2a123c",
+        "name": "GEN24 Modbus Server",
+        "logEnabled": true,
+        "hostname": "0.0.0.0",
+        "serverPort": "502",
+        "responseDelay": 100,
+        "delayUnit": "ms",
+        "coilsBufferSize": 10000,
+        "holdingBufferSize": "40000",
+        "inputBufferSize": 10000,
+        "discreteBufferSize": 10000,
+        "showErrors": true,
+        "x": 370,
+        "y": 60,
+        "wires": [
+            [],
+            [],
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "9c84c4360d1f4d99",
+        "type": "debug",
+        "z": "492ef081ec2a123c",
+        "g": "29389f9e917216d1",
+        "name": "Read",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 750,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "2ca7cb7b47f3b247",
+        "type": "function",
+        "z": "492ef081ec2a123c",
+        "g": "f8f11dd477e2e9ab",
+        "name": "Write to Registers",
+        "func": "//Eins weniger als in der Excel steht!\nconst registers = [\n    //AC Total Current value\n    //40071, 40072,\n    //AC Voltage Average Phase-to-neutral value\n    //40079, 40080,\n    //AC Power value\n    40097, 40098\n    ];\n\nmsg.inverterdata = {\n    //AC_Total_Current: msg.payload.switch0.current,\n    //AC_Voltage: msg.payload.switch0.voltage,\n    AC_Power: msg.payload.switch0.apower*-1 //negieren, da Erzeugung\n}\n\nfunction tofloatregisters(value) {\n    var buf = Buffer.alloc(4);\n    buf.writeFloatBE(value);\n    return [(buf[0] * 256 + buf[1]), (buf[2] * 256) + buf[3]]\n}\n\nvar values = [];\n\nfor (var key of Object.keys(msg.inverterdata)) {\n    for (var val of tofloatregisters(msg.inverterdata[key])) values.push(val);\n}\n\nconst modbusmessage = {\n    'value': values,\n    'fc': 16,\n    'unitid': 3,\n    'address': registers,\n    'quantity': values.length\n}\n\nreturn ({ payload: modbusmessage })",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 590,
+        "y": 220,
+        "wires": [
+            [
+                "8f890ca586af71bb"
+            ]
+        ]
+    },
+    {
+        "id": "9137caadc00449b8",
+        "type": "buffer-parser",
+        "z": "492ef081ec2a123c",
+        "g": "29389f9e917216d1",
+        "name": "",
+        "data": "payload",
+        "dataType": "msg",
+        "specification": "spec",
+        "specificationType": "ui",
+        "items": [
+            {
+                "type": "floatbe",
+                "name": "data",
+                "offset": 0,
+                "length": 1,
+                "offsetbit": 0,
+                "scale": "1",
+                "mask": ""
+            }
+        ],
+        "swap1": "",
+        "swap2": "",
+        "swap3": "",
+        "swap1Type": "swap",
+        "swap2Type": "swap",
+        "swap3Type": "swap",
+        "msgProperty": "payload",
+        "msgPropertyType": "str",
+        "resultType": "keyvalue",
+        "resultTypeType": "return",
+        "multipleResult": false,
+        "fanOutMultipleResult": false,
+        "setTopic": true,
+        "outputs": 1,
+        "x": 610,
+        "y": 560,
+        "wires": [
+            [
+                "9c84c4360d1f4d99"
+            ]
+        ]
+    },
+    {
+        "id": "4b0ca8da2a7ea892",
+        "type": "modbus-flex-getter",
+        "z": "492ef081ec2a123c",
+        "g": "29389f9e917216d1",
+        "name": "",
+        "showStatusActivities": true,
+        "showErrors": true,
+        "showWarnings": true,
+        "logIOActivities": false,
+        "server": "0ed293f9e2365360",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": true,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 410,
+        "y": 560,
+        "wires": [
+            [
+                "9137caadc00449b8"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "d808d1fbf87eb05a",
+        "type": "inject",
+        "z": "492ef081ec2a123c",
+        "g": "29389f9e917216d1",
+        "name": "AC Power value",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"fc\":3,\"unitid\":3,\"address\":40097,\"quantity\":2}",
+        "payloadType": "json",
+        "x": 180,
+        "y": 560,
+        "wires": [
+            [
+                "4b0ca8da2a7ea892"
+            ]
+        ]
+    },
+    {
+        "id": "0ed293f9e2365360",
+        "type": "modbus-client",
+        "name": "ModbusClient",
+        "clienttype": "tcp",
+        "bufferCommands": true,
+        "stateLogEnabled": true,
+        "queueLogEnabled": false,
+        "failureLogEnabled": true,
+        "tcpHost": "0.0.0.0",
+        "tcpPort": "502",
+        "tcpType": "DEFAULT",
+        "serialPort": "/dev/ttyUSB",
+        "serialType": "RTU-BUFFERD",
+        "serialBaudrate": "9600",
+        "serialDatabits": "8",
+        "serialStopbits": "1",
+        "serialParity": "none",
+        "serialConnectionDelay": "100",
+        "serialAsciiResponseStartDelimiter": "0x3A",
+        "unit_id": "3",
+        "commandDelay": "1",
+        "clientTimeout": "1000",
+        "reconnectOnTimeout": true,
+        "reconnectTimeout": "2000",
+        "parallelUnitIdsAllowed": true,
+        "showErrors": true,
+        "showWarnings": true,
+        "showLogs": true
+    }
 ]
