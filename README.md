@@ -1,4 +1,4 @@
-# Wie man ein RaspberryPi mit docker und nore-red einrichtet
+# Wie man ein RaspberryPi mit docker und node-red einrichtet
 
 SD Karte mit `Raspberry Imager` flashen, hier direkt ein WLAN angeben, welches man bei der weiteren Einrichtung verwenden will.
 (Später kann man dann noch das WLAN einrichten, welches dann Vorort existiert).
@@ -21,7 +21,7 @@ sudo usermod -aG docker pi
 ```
 TODO: Wieso muss man dann bei den docker Befehlen im Anschluss noch "sudo" davor schreiben?
 
-## nore-red als docker Container starten
+## node-red als docker Container starten
 https://nodered.org/docs/getting-started/docker
 ```
 sudo docker run -d --restart unless-stopped -p 1880:1880 -p 502:502 -v node_red_data:/data --name mynodered nodered/node-red
