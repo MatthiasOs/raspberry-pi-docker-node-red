@@ -81,9 +81,9 @@ Außerdem wird jede Sekunde beim Shelly die Erzeugungsdaten abgefragt und diese 
 - Shelly IP Adresse im Node anpassen
 - Im Web Interface des Fronius Wechselrichters den Modbus Server als Energiezähler hinzufügen (**Raspberry Pi IP Adresse** mit **Port 502** und **UnitID 3**)
 
-[Energiezaehler.jpg]
+![Energiezaehler im Fornius](https://raw.githubusercontent.com/MatthiasOs/raspberry-pi-docker-node-red/main/Energiezaehler.jpg)
 
 ## Ergebnus
 Im SolarWeb kann man dann im Vergleich zur Erzeugung im Fornius Wechselrichter sehen, dass die weitere PV Erzeugung korrekt eingebunden ist:
-[Vergleich.jpg]
+![Vergleich Fronius Wechselrichter und SolarWeb](https://raw.githubusercontent.com/MatthiasOs/raspberry-pi-docker-node-red/main/Vergleich.jpg)
 Der Unterschied ist genau die Erzeugung des Balkonwechselrichters.
