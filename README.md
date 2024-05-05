@@ -1,4 +1,4 @@
-# Übersicht der Anwendungen: Folie1.JPG 
+# Übersicht der Anwendungen: ![Folie1.JPG](Folie1.JPG) 
 
 
 # Wie man ein RaspberryPi mit docker und node-red einrichtet
@@ -86,9 +86,9 @@ Außerdem wird jede Sekunde beim Shelly die Erzeugungsdaten abgefragt und diese 
 - Shelly IP Adresse im Node anpassen
 - Im Web Interface des Fronius Wechselrichters den Modbus Server als Energiezähler hinzufügen:
 -- **RaspberryPi IP Adresse** mit **Port 502** und **UnitID 3**
-![Energiezaehler im Fornius](https://raw.githubusercontent.com/MatthiasOs/raspberry-pi-docker-node-red/main/Energiezaehler.jpg)
+![Energiezaehler im Fornius](Energiezaehler.jpg)
 
 ## Ergebnis
 Im SolarWeb kann man dann im Vergleich zur Erzeugung im Fornius Wechselrichter sehen, dass das Balkonkraftwerk korrekt eingebunden wurde:
-![Vergleich Fronius Wechselrichter und SolarWeb](https://raw.githubusercontent.com/MatthiasOs/raspberry-pi-docker-node-red/main/Vergleich.jpg)
+![Vergleich Fronius Wechselrichter und SolarWeb](Vergleich.jpg)
 Der Unterschied ist genau die Erzeugung des Balkonwechselrichters.
