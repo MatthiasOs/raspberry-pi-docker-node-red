@@ -1,0 +1,182 @@
+[
+    {
+        "id": "999bb9ea6adf3de8",
+        "type": "tab",
+        "label": "Hardy Barth Ladepunkt",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "dcd1bddb57723ab6",
+        "type": "comment",
+        "z": "999bb9ea6adf3de8",
+        "name": "API Quelle",
+        "info": "http://apidoc.ecb1.de/#!/measuring/post_meters_id\n\nhttp://ecb1.local/api/doc\n\n\n# lgwb  Saldo Active power+/- <= aktuelle Leistung \"-5.6\"\n# 1-0:1.4.0   Active power+  <= aktuelle Leistung \"5.6\"\n# 1-0:1.8.0   Active energy+ <= Zähler Arbeit/Energie \"8.7731999999999988\"\n# 1-0:2.4.0   Active power- <= aktuelle Leistung \"0.0\"\n# 1-0:2.8.0   Active energy- <= Zähler Arbeit/Energie \"0.0\"\n# 1-0:13.4.0  Power factor \"0.866\"\n# 1-0:21.4.0  Active power+ (L1) \"5.6\"\n# 1-0:21.8.0  Active energy+ (L1) \"8.7731999999999988\"\n# 1-0:22.4.0  Active power- (L1) \"0.0\"\n# 1-0:22.8.0  Active energy- (L1) \"0.0\"\n# 1-0:31.4.0  Current (L1) \"0.027999999999999994\"\n# 1-0:32.4.0  Voltage (L1) \"226.914\"\n# 1-0:33.4.0  Power factor (L1) \"0.866\"\n# 1-0:41.4.0  Active power+ (L2) \"0.0\"\n# 1-0:41.8.0  Active energy+ (L2) \"0.0\"\n# 1-0:42.4.0  Active power- (L2) \"0.0\"\n# 1-0:42.8.0  Active energy- (L2) \"0.0\"\n# 1-0:51.4.0  Current (L2) \"0.0\"\n# 1-0:52.4.0  Voltage (L2) \"227.55900000000009\"\n# 1-0:53.4.0  Power factor (L2) \"0.0\"\n# 1-0:61.4.0  Active power+ (L3) \"0.0\"\n# 1-0:61.8.0  Active energy+ (L3) \"0.0\"\n# 1-0:62.4.0  Active power- (L3) \"0.0\"\n# 1-0:62.8.0  Active energy- (L3) \"0.0\"\n# 1-0:71.4.0  Current (L3) \"0.0\"\n# 1-0:72.4.0  Voltage (L3) \"226.546\"\n# 1-0:73.4.0  Power factor (L3) \"0.0\"\n\n\nBeispiel Antwort:\n{\n\t\"meter\": {\n\t\t\"function\": \"socket\",\n\t\t\"type\": \"eCB1 intern\",\n\t\t\"ipaddress\": \"127.0.0.1\",\n\t\t\"vendor\": \"eCHARGE\",\n\t\t\"serial\": \"(DEINE SERIENNUMMER)\",\n\t\t\"id\": 1,\n\t\t\"data\": {\n\t\t\t\"1-0:22.4.0\": 0.0,\n\t\t\t\"1-0:73.4.0\": 0.0,\n\t\t\t\"1-0:51.4.0\": 0.0,\n\t\t\t\"1-0:62.4.0\": 0.0,\n\t\t\t\"1-0:41.4.0\": 0.0,\n\t\t\t\"1-0:72.4.0\": 226.973,\n\t\t\t\"1-0:42.4.0\": 0.0,\n\t\t\t\"1-0:42.8.0\": 0.0,\n\t\t\t\"1-0:2.4.0\": 0.0,\n\t\t\t\"1-0:62.8.0\": 0.0,\n\t\t\t\"1-0:53.4.0\": 0.0,\n\t\t\t\"1-0:41.8.0\": 0.0,\n\t\t\t\"1-0:1.8.0\": 8.7715,\n\t\t\t\"1-0:61.8.0\": 0.0,\n\t\t\t\"1-0:2.8.0\": 0.0,\n\t\t\t\"lgwb\": -5.0,\n\t\t\t\"1-0:21.8.0\": 8.7715,\n\t\t\t\"1-0:52.4.0\": 228.037,\n\t\t\t\"1-0:31.4.0\": 0.025,\n\t\t\t\"1-0:61.4.0\": 0.0,\n\t\t\t\"1-0:71.4.0\": 0.0,\n\t\t\t\"1-0:21.4.0\": 5.0,\n\t\t\t\"1-0:33.4.0\": 0.858,\n\t\t\t\"1-0:13.4.0\": 0.858,\n\t\t\t\"1-0:22.8.0\": 0.0,\n\t\t\t\"1-0:1.4.0\": 5.0,\n\t\t\t\"1-0:32.4.0\": 227.321\n\t\t},\n\t\t\"name\": \"Carport\"\n\t},\n\t\"protocol-version\": \"1.4\"\n}",
+        "x": 100,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "989eb95978ddba44",
+        "type": "http request",
+        "z": "999bb9ea6adf3de8",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://ecb1.local/api/v1/meters/1",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 290,
+        "y": 180,
+        "wires": [
+            [
+                "37dbadd621a56daf",
+                "04d1c7bccdc4cfc8"
+            ]
+        ]
+    },
+    {
+        "id": "04d1c7bccdc4cfc8",
+        "type": "template",
+        "z": "999bb9ea6adf3de8",
+        "name": "lgwb  Saldo Active power+/-",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{payload.meter.data.lgwb}}",
+        "output": "str",
+        "x": 600,
+        "y": 180,
+        "wires": [
+            [
+                "a372fe9c9e650e29"
+            ]
+        ]
+    },
+    {
+        "id": "b5039f4e5faa6658",
+        "type": "inject",
+        "z": "999bb9ea6adf3de8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 180,
+        "wires": [
+            [
+                "989eb95978ddba44"
+            ]
+        ]
+    },
+    {
+        "id": "d2ab49cd7a547869",
+        "type": "debug",
+        "z": "999bb9ea6adf3de8",
+        "name": "template power",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1020,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "ba4bb0c99af0aa4c",
+        "type": "comment",
+        "z": "999bb9ea6adf3de8",
+        "name": "TODO docker Portfreigabe nötig???",
+        "info": "Muss Port 80 für http freigegeben werden aus dem Container?",
+        "x": 360,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "37dbadd621a56daf",
+        "type": "debug",
+        "z": "999bb9ea6adf3de8",
+        "name": "http request",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 550,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "949e25d8fe6b072c",
+        "type": "inject",
+        "z": "999bb9ea6adf3de8",
+        "name": "Mock http Answer",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"meter\":{\"function\":\"socket\",\"type\":\"eCB1 intern\",\"ipaddress\":\"127.0.0.1\",\"vendor\":\"eCHARGE\",\"serial\":\"(DEINE SERIENNUMMER)\",\"id\":1,\"data\":{\"1-0:22.4.0\":0,\"1-0:73.4.0\":0,\"1-0:51.4.0\":0,\"1-0:62.4.0\":0,\"1-0:41.4.0\":0,\"1-0:72.4.0\":226.973,\"1-0:42.4.0\":0,\"1-0:42.8.0\":0,\"1-0:2.4.0\":0,\"1-0:62.8.0\":0,\"1-0:53.4.0\":0,\"1-0:41.8.0\":0,\"1-0:1.8.0\":8.7715,\"1-0:61.8.0\":0,\"1-0:2.8.0\":0,\"lgwb\":-5.2,\"1-0:21.8.0\":8.7715,\"1-0:52.4.0\":228.037,\"1-0:31.4.0\":0.025,\"1-0:61.4.0\":0,\"1-0:71.4.0\":0,\"1-0:21.4.0\":5,\"1-0:33.4.0\":0.858,\"1-0:13.4.0\":0.858,\"1-0:22.8.0\":0,\"1-0:1.4.0\":5,\"1-0:32.4.0\":227.321},\"name\":\"Carport\"},\"protocol-version\":\"1.4\"}",
+        "payloadType": "json",
+        "x": 330,
+        "y": 240,
+        "wires": [
+            [
+                "04d1c7bccdc4cfc8"
+            ]
+        ]
+    },
+    {
+        "id": "a372fe9c9e650e29",
+        "type": "function",
+        "z": "999bb9ea6adf3de8",
+        "name": "formatFloat",
+        "func": "msg.payload = parseFloat(msg.payload);\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 830,
+        "y": 180,
+        "wires": [
+            [
+                "d2ab49cd7a547869"
+            ]
+        ]
+    }
+]
