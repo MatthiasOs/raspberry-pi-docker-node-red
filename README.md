@@ -63,8 +63,8 @@ sudo nmtui
 ```
 (Manuell müsste es auch gehen, dann muss man eine "\<Wifi-Name\>.nmconnection" Datei anlegen, siehe https://forums.raspberrypi.com/viewtopic.php?t=360175)
 
-# Dependecies in node-red installieren
-- [node-red-contrib-shelly](https://flows.nodered.org/node/node-red-contrib-shelly) zum Auslesen der PV Erzeugung von einem Shelly
+# Dependecies in node-red Palette installieren
+- [node-red-contrib-shelly](https://flows.nodered.org/node/node-red-contrib-shelly) zum Auslesen der PV Erzeugung von einem Shelly (benötigt für Variante 1)
 - [node-red-contrib-modbus](https://flows.nodered.org/node/node-red-contrib-modbus) zum Schreiben der Daten mittels Modbus in den Fronius Wechselrichter
 - [node-red-contrib-buffer-parser](https://flows.nodered.org/node/node-red-contrib-buffer-parser) zum einfachen Konvertieren von Registern zu lesbaren Werten und zurück (optional)
 
@@ -94,3 +94,9 @@ Im SolarWeb kann man dann im Vergleich zur Erzeugung im Fornius Wechselrichter s
 Der Unterschied ist genau die Erzeugung des Balkonwechselrichters.
 
 # Variante 2: Einen Hardy Barth Ladepunkt als externen Verbraucher registrieren
+- TODO: Muss Port 80 für http Request auch in Docker freigegeben werden?
+- 
+## Nach dem Import des flows muss noch folgendes gemacht werden:
+- http request Adresse im Node überprüfen, müsste aber generisch für fast alle Anwendungsfälle so passen
+- Im Web Interface des Fronius Wechselrichters den Modbus Server als Energiezähler hinzufügen:
+-- **RaspberryPi IP Adresse** mit **Port 502** und **UnitID 3**
