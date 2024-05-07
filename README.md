@@ -63,7 +63,7 @@ sudo nmtui
 ```
 (Manuell müsste es auch gehen, dann muss man eine "\<Wifi-Name\>.nmconnection" Datei anlegen, siehe https://forums.raspberrypi.com/viewtopic.php?t=360175)
 
-# Mittels node-red einen Balkonwechselrichter als externen PV-Erzeuger registrieren
+# Variante 1: Einen Balkonwechselrichter als externen PV-Erzeuger registrieren
 Damit die PV Erzeugung im Fornius SolarWeb neben einem Fornius Wechselrichter auch einen weiteren Balkonwechselrichter berücksichtigt, muss man diese dem Fronius Wechselrichter als externen Energiezähler zugänglich machen.
 
 Dazu muss man einen ModbusTCP Server anlegen der einen Energiezähler (GEN24) so simuliert, dass der Fronius Wechselrichter sich aus dem Register des Modbus Servers die Werte holen kann.
@@ -92,3 +92,5 @@ Außerdem wird jede Sekunde beim Shelly die Erzeugungsdaten abgefragt und diese 
 Im SolarWeb kann man dann im Vergleich zur Erzeugung im Fornius Wechselrichter sehen, dass das Balkonkraftwerk korrekt eingebunden wurde:
 ![Vergleich Fronius Wechselrichter und SolarWeb](Vergleich.jpg)
 Der Unterschied ist genau die Erzeugung des Balkonwechselrichters.
+
+# Variante 2: Einen Hardy Barth Ladepunkt als externen Verbraucher registrieren
