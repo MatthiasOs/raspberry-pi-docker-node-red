@@ -1,0 +1,108 @@
+[
+    {
+        "id": "21bec8f50b6a2e22",
+        "type": "tab",
+        "label": "Util",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "2b277841.d47e58",
+        "type": "inject",
+        "z": "21bec8f50b6a2e22",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "Reboot",
+        "payloadType": "str",
+        "x": 110,
+        "y": 60,
+        "wires": [
+            [
+                "5f42b30b.baefac"
+            ]
+        ]
+    },
+    {
+        "id": "5f42b30b.baefac",
+        "type": "exec",
+        "z": "21bec8f50b6a2e22",
+        "command": "reboot now",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 290,
+        "y": 60,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "c7dc3767.abafd8",
+        "type": "inject",
+        "z": "21bec8f50b6a2e22",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "Shutdown",
+        "payloadType": "str",
+        "x": 120,
+        "y": 120,
+        "wires": [
+            [
+                "6ea70a47.2ae674"
+            ]
+        ]
+    },
+    {
+        "id": "6ea70a47.2ae674",
+        "type": "exec",
+        "z": "21bec8f50b6a2e22",
+        "command": "poweroff",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 280,
+        "y": 120,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    }
+]
