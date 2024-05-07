@@ -63,6 +63,11 @@ sudo nmtui
 ```
 (Manuell müsste es auch gehen, dann muss man eine "\<Wifi-Name\>.nmconnection" Datei anlegen, siehe https://forums.raspberrypi.com/viewtopic.php?t=360175)
 
+# Dependecies in node-red installieren
+- [node-red-contrib-shelly](https://flows.nodered.org/node/node-red-contrib-shelly) zum Auslesen der PV Erzeugung von einem Shelly
+- [node-red-contrib-modbus](https://flows.nodered.org/node/node-red-contrib-modbus) zum Schreiben der Daten mittels Modbus in den Fronius Wechselrichter
+- [node-red-contrib-buffer-parser](https://flows.nodered.org/node/node-red-contrib-buffer-parser) zum einfachen Konvertieren von Registern zu lesbaren Werten und zurück (optional)
+
 # Variante 1: Einen Balkonwechselrichter als externen PV-Erzeuger registrieren
 Damit die PV Erzeugung im Fornius SolarWeb neben einem Fornius Wechselrichter auch einen weiteren Balkonwechselrichter berücksichtigt, muss man diese dem Fronius Wechselrichter als externen Energiezähler zugänglich machen.
 
@@ -71,18 +76,13 @@ In die Register des Modbus Server muss man also die benötigten Werte (`AC Power
 Die Register Mappings können [hier von Fornius](https://www.fronius.com/QR-link/0006) runtergeladen werden, oder siehe im [Anhang](Meter_Register_Map_Float_v1.0.xlsx).
 (Beachten ob im Fronius Wechselrichter "Float" oder "Int+SF" eingestellt ist!)
 
-## Dependecies in node-red installieren
-- [node-red-contrib-shelly](https://flows.nodered.org/node/node-red-contrib-shelly) zum Auslesen der PV Erzeugung von einem Shelly
-- [node-red-contrib-modbus](https://flows.nodered.org/node/node-red-contrib-modbus) zum Schreiben der Daten mittels Modbus in den Fronius Wechselrichter
-- [node-red-contrib-buffer-parser](https://flows.nodered.org/node/node-red-contrib-buffer-parser) zum einfachen Konvertieren von Registern zu lesbaren Werten und zurück (optional)
-
 ## Node-Red Flow
-In node-red den [Flow](flow.json) (angelehnt an diesen [flow](https://discourse.nodered.org/t/simulate-a-modbus-tcp-server-and-feed-registers/78763)) importieren.
+In node-red den [Flow](shelly_pv_erzeuger_flow.json) (angelehnt an diesen [flow aus dem node-red Forum](https://discourse.nodered.org/t/simulate-a-modbus-tcp-server-and-feed-registers/78763)) importieren.
 In dem Flow werden nach einem boot/deployment einmalig die benötigten Daten, dass der Fronius Wechselrichter den Modbus Server als GEN24 Energiezähler erkennt in den Modbus Server geschrieben.
 Außerdem wird jede Sekunde beim Shelly die Erzeugungsdaten abgefragt und diese (muss negativ sein, da Erzeugung) in den Modbus Server geschrieben.
-(Es stehen weitere lesende Operationen im Flow bereit, diese werden aber für den Workflow nicht benötigt und sie nur zur Kontrolle da.)
+(Es stehen weitere lesende Operationen im flow bereit, diese werden aber für den Anwendungsfall nicht benötigt und sie nur zur Kontrolle da.)
 
-### Nach dem Import des flows muss noch folgendes gemacht werden:
+## Nach dem Import des flows muss noch folgendes gemacht werden:
 - Shelly IP Adresse im Node anpassen
 - Im Web Interface des Fronius Wechselrichters den Modbus Server als Energiezähler hinzufügen:
 -- **RaspberryPi IP Adresse** mit **Port 502** und **UnitID 3**
