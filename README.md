@@ -64,39 +64,42 @@ sudo nmtui
 (Manuell müsste es auch gehen, dann muss man eine "\<Wifi-Name\>.nmconnection" Datei anlegen, siehe https://forums.raspberrypi.com/viewtopic.php?t=360175)
 
 # Dependecies in node-red Palette installieren
-- [node-red-contrib-shelly](https://flows.nodered.org/node/node-red-contrib-shelly) zum Auslesen der PV Erzeugung von einem Shelly (benötigt für Variante 1)
+- [node-red-contrib-shelly](https://flows.nodered.org/node/node-red-contrib-shelly) zum Auslesen der PV Erzeugung von einem Shelly (nur benötigt für Variante 1)
 - [node-red-contrib-modbus](https://flows.nodered.org/node/node-red-contrib-modbus) zum Schreiben der Daten mittels Modbus in den Fronius Wechselrichter
 - [node-red-contrib-buffer-parser](https://flows.nodered.org/node/node-red-contrib-buffer-parser) zum einfachen Konvertieren von Registern zu lesbaren Werten und zurück (optional)
 
-# Variante 1: Einen Balkonwechselrichter als externen PV-Erzeuger registrieren
-Damit die PV Erzeugung im Fornius SolarWeb neben einem Fornius Wechselrichter auch einen weiteren Balkonwechselrichter berücksichtigt, muss man diese dem Fronius Wechselrichter als externen Energiezähler zugänglich machen.
+# Externer Zähler im Fornius Wechelrichter
+Damit im Fornius SolarWeb neben dem Fornius Wechselrichter auch ein externer Erzeuger (zB Balkonkraftwerk) oder Verbraucher (zB Ladepunkt) berücksichtigt wird, muss man diese dem Fronius Wechselrichter als externen Energiezähler (GEN24) zugänglich machen.
 
-Dazu muss man einen ModbusTCP Server anlegen der einen Energiezähler (GEN24) so simuliert, dass der Fronius Wechselrichter sich aus dem Register des Modbus Servers die Werte holen kann.
-In die Register des Modbus Server muss man also die benötigten Werte (`AC Power value (Total) [W]`) aus dem externen PV-Erzeuger (zB Balkonkraftwerk) in die dafür vorgesehen Register schreiben.
+Dazu wird ein ModbusTCP Server angelegt der den Energiezähler so simuliert, dass der Fronius Wechselrichter sich aus dem Register dieses Modbus Servers die Werte holen kann.
+In die Register des Modbus Server muss man neben Standardwerte zur Identifikation als Energiezähler noch den benötigten `AC Power value (Total) [W]` des Erzeugers/Verbrauchers in die dafür vorgesehen Register schreiben.
 Die Register Mappings können [hier von Fornius](https://www.fronius.com/QR-link/0006) runtergeladen werden, oder siehe im [Anhang](Meter_Register_Map_Float_v1.0.xlsx).
 (Beachten ob im Fronius Wechselrichter "Float" oder "Int+SF" eingestellt ist!)
 
-## Node-Red Flow
+# Variante 1: Einen Balkonwechselrichter als externen PV-Erzeuger registrieren
 In node-red den [Flow](shelly_pv_erzeuger_flow.json) (angelehnt an diesen [flow aus dem node-red Forum](https://discourse.nodered.org/t/simulate-a-modbus-tcp-server-and-feed-registers/78763)) importieren.
-In dem Flow werden nach einem boot/deployment einmalig die benötigten Daten, dass der Fronius Wechselrichter den Modbus Server als GEN24 Energiezähler erkennt in den Modbus Server geschrieben.
+Nach einem boot/deployment werden automatisch die einmalig benötigten Daten in den Modbus Server geschrieben.
 Außerdem wird jede Sekunde beim Shelly die Erzeugungsdaten abgefragt und diese (muss negativ sein, da Erzeugung) in den Modbus Server geschrieben.
 (Es stehen weitere lesende Operationen im flow bereit, diese werden aber für den Anwendungsfall nicht benötigt und sie nur zur Kontrolle da.)
 
 ## Nach dem Import des flows muss noch folgendes gemacht werden:
 - Shelly IP Adresse im Node anpassen
-- Im Web Interface des Fronius Wechselrichters den Modbus Server als Energiezähler hinzufügen:
--- **RaspberryPi IP Adresse** mit **Port 502** und **UnitID 3**
-![Energiezaehler im Fornius](Energiezaehler.jpg)
-
-## Ergebnis
-Im SolarWeb kann man dann im Vergleich zur Erzeugung im Fornius Wechselrichter sehen, dass das Balkonkraftwerk korrekt eingebunden wurde:
-![Vergleich Fronius Wechselrichter und SolarWeb](Vergleich.jpg)
-Der Unterschied ist genau die Erzeugung des Balkonwechselrichters.
 
 # Variante 2: Einen Hardy Barth Ladepunkt als externen Verbraucher registrieren
-- TODO: Muss Port 80 für http Request auch in Docker freigegeben werden?
-- 
+In node-red den [Flow](hardy_barth_verbraucher_flow.json) (angelehnt an diesen [flow aus dem node-red Forum](https://discourse.nodered.org/t/simulate-a-modbus-tcp-server-and-feed-registers/78763)) importieren.
+Nach einem boot/deployment werden automatisch die einmalig benötigten Daten in den Modbus Server geschrieben.
+Außerdem wird jede Sekunde ein http request an die Ladesäule gesendet und die Verbrauchsdaten abgefragt und diese (muss positiv sein, da Verbrauch) in den Modbus Server geschrieben.
+(Es stehen weitere lesende Operationen im flow bereit, diese werden aber für den Anwendungsfall nicht benötigt und sie nur zur Kontrolle da.)
+
 ## Nach dem Import des flows muss noch folgendes gemacht werden:
-- http request Adresse im Node überprüfen, müsste aber generisch für fast alle Anwendungsfälle so passen
-- Im Web Interface des Fronius Wechselrichters den Modbus Server als Energiezähler hinzufügen:
--- **RaspberryPi IP Adresse** mit **Port 502** und **UnitID 3**
+- http request Adresse im Node überprüfen, müsste aber generisch für alle Anwendungsfälle so passen
+
+# Anzeige im SolarWeb
+Im Web Interface des Fronius Wechselrichters muss man nun noch den Modbus Server als Energiezähler hinzufügen:
+- **RaspberryPi IP Adresse** mit **Port 502** und **UnitID 3**
+
+![Energiezaehler im Fornius](Energiezaehler.jpg)
+
+Anschließend kann man den Unterschied zwischen SolarWeb und dem Fornius Wechselrichter sehen.
+In dem Fall, wurde ein PV-Erzeuger (Variante 1) eingebunden:
+![Vergleich Fronius Wechselrichter und SolarWeb](Vergleich.jpg)
