@@ -97,9 +97,16 @@ Außerdem wird jede Sekunde ein http request an die Ladesäule gesendet und die 
 # Anzeige im SolarWeb
 Im Web Interface des Fronius Wechselrichters muss man nun noch den Modbus Server als Energiezähler hinzufügen:
 - **RaspberryPi IP Adresse** mit **Port 502** und **UnitID 3**
-
+  
 ![Energiezaehler im Fornius](Energiezaehler.jpg)
 
 Anschließend kann man den Unterschied zwischen SolarWeb und dem Fornius Wechselrichter sehen.
 In dem Fall, wurde ein PV-Erzeuger (Variante 1) eingebunden:
 ![Vergleich Fronius Wechselrichter und SolarWeb](Vergleich.jpg)
+
+# WORK IN PROGRESS: Nice to have
+## Reboot/Shutdown über node-red
+Damit man das Raspberry Pi über node-red neustarten und ausschalten kann, muss man den [Flow](shutdown_reboot_flow.json) importieren.
+Der User, der den Docker Container startet hat aber leider nur die Rechte einen Reboot zu machen. 
+Für Shutdown braucht speziell die Erlaubnis den shutdown Befehl auszuführen.
+-> visudo!???
