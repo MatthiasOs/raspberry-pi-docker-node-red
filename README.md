@@ -92,7 +92,7 @@ Außerdem wird jede Sekunde ein http request an die Ladesäule gesendet und die 
 (Es stehen weitere lesende Operationen im flow bereit, diese werden aber für den Anwendungsfall nicht benötigt und sie nur zur Kontrolle da.)
 
 ## Nach dem Import des flows muss noch folgendes gemacht werden:
-- http request Adresse im Node überprüfen, müsste aber generisch für alle Anwendungsfälle so passen
+- http request Adresse im Node überprüfen, müsste aber generisch für Anwendungsfälle mit nur einem Ladepunkt so passen
 
 # Anzeige im SolarWeb
 Im Web Interface des Fronius Wechselrichters muss man nun noch den Modbus Server als Energiezähler hinzufügen:
