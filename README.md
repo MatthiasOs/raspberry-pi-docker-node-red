@@ -41,11 +41,11 @@ Kontrolle ob der Container läuft:
 docker ps
 docker volume ls
 ```
-Im Browser die IP mit Port 1880 an surfen (zB 192.168.178.40:1800) -> node-red ist erreichbar
+Im Browser die IP mit Port 1880 an surfen (zB http://192.168.178.40:1800) -> node-red ist erreichbar
 
 Zum Beenden des Containers:
 ```
-sudo docker rm -f mynodered
+docker rm -f mynodered
 ```
 
 ## docker Einstellungen
