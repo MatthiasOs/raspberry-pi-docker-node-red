@@ -38,7 +38,7 @@ https://nodered.org/docs/getting-started/docker
 sudo docker run -d --restart unless-stopped -p 1880:1880 -p 502:502 -v node_red_data:/data --name mynodered nodered/node-red
 ```
 ```
--d = detached (keine logs on der aktuellen shell)
+-d = detached (keine logs in der aktuellen shell)
 -it = attached (man sieht alles in der aktuellen shell, kann diese aber dann auch nicht mehr verwenden
 -p 1880:1880 (Port von Node-Red mappen und von außen zugänglich machen)
 -p 502:502 (Port des ModbusTCP Server mappen und von außen zugänglich machen)
