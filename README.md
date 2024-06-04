@@ -68,12 +68,12 @@ sudo nmtui
 - [node-red-contrib-modbus](https://flows.nodered.org/node/node-red-contrib-modbus) zum Schreiben der Daten mittels Modbus in den Fronius Wechselrichter
 - [node-red-contrib-buffer-parser](https://flows.nodered.org/node/node-red-contrib-buffer-parser) zum einfachen Konvertieren von Registern zu lesbaren Werten und zurück (optional)
 
-# Externer Zähler im Fornius Wechelrichter
-Damit im Fornius SolarWeb neben dem Fornius Wechselrichter auch ein externer Erzeuger (zB Balkonkraftwerk) oder Verbraucher (zB Ladepunkt) berücksichtigt wird, muss man diese dem Fronius Wechselrichter als externen Energiezähler (GEN24) zugänglich machen.
+# Externer Zähler im Fronius Wechelrichter
+Damit im Fronius SolarWeb neben dem Fronius Wechselrichter auch ein externer Erzeuger (zB Balkonkraftwerk) oder Verbraucher (zB Ladepunkt) berücksichtigt wird, muss man diese dem Fronius Wechselrichter als externen Energiezähler (GEN24) zugänglich machen.
 
 Dazu wird ein ModbusTCP Server angelegt der den Energiezähler so simuliert, dass der Fronius Wechselrichter sich aus dem Register dieses Modbus Servers die Werte holen kann.
 In die Register des Modbus Server muss man neben Standardwerte zur Identifikation als Energiezähler noch den benötigten `AC Power value (Total) [W]` des Erzeugers/Verbrauchers in die dafür vorgesehen Register schreiben.
-Die Register Mappings können [hier von Fornius](https://www.fronius.com/QR-link/0006) runtergeladen werden, oder siehe im [Anhang](Meter_Register_Map_Float_v1.0.xlsx).
+Die Register Mappings können [hier von Fronius](https://www.fronius.com/QR-link/0006) runtergeladen werden, oder siehe im [Anhang](Meter_Register_Map_Float_v1.0.xlsx).
 (Beachten ob im Fronius Wechselrichter "Float" oder "Int+SF" eingestellt ist!)
 
 # Variante 1: Einen Balkonwechselrichter als externen PV-Erzeuger registrieren
@@ -98,9 +98,9 @@ Außerdem wird jede Sekunde ein http request an die Ladesäule gesendet und die 
 Im Web Interface des Fronius Wechselrichters muss man nun noch den Modbus Server als Energiezähler hinzufügen:
 - **RaspberryPi IP Adresse** mit **Port 502** und **UnitID 3**
   
-![Energiezaehler im Fornius](Energiezaehler.jpg)
+![Energiezaehler im Fronius](Energiezaehler.jpg)
 
-Anschließend kann man den Unterschied zwischen SolarWeb und dem Fornius Wechselrichter sehen.
+Anschließend kann man den Unterschied zwischen SolarWeb und dem Fronius Wechselrichter sehen.
 In dem Fall, wurde ein PV-Erzeuger (Variante 1) eingebunden:
 ![Vergleich Fronius Wechselrichter und SolarWeb](Vergleich.jpg)
 
