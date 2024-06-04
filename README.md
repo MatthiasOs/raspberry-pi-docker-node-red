@@ -22,6 +22,7 @@ Pi in docker Gruppe hinzufügen, dass man Container starten kann als pi user:
 ```
 sudo usermod -aG docker pi
 ```
+Anschließend ausloggen und neu einloggen als pi user.
 TODO: Wieso muss man dann bei den docker Befehlen im Anschluss noch "sudo" davor schreiben?
 
 ## node-red als docker Container starten
