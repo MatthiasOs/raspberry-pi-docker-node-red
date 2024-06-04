@@ -101,7 +101,7 @@ Außerdem wird jede Sekunde ein http request an die Ladesäule gesendet und die 
 
 ## Nach dem Import des flows muss noch folgendes gemacht werden:
 - http request Adresse im Node überprüfen, müsste aber generisch für Anwendungsfälle mit nur einem Ladepunkt so passen
--- wenn die IP Adresse `http://ecb1.local` nicht aufgelöst werden kann, muss die tatsächliche IP der Ladestation eingetragen werden
+- wenn die IP Adresse `http://ecb1.local` nicht aufgelöst werden kann, muss die tatsächliche IP der Ladestation eingetragen werden
 
 # Anzeige im SolarWeb
 Im Web Interface des Fronius Wechselrichters muss man nun noch den Modbus Server als Energiezähler hinzufügen:
