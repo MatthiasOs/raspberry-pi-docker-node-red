@@ -65,7 +65,7 @@ sudo systemctl enable containerd.service
 (Der node-red Container wird immer gestartet wenn docker gestartet wird, wenn "--restart unless-stopped" oben mitgegeben wurde)
 
 ## WLAN
-Damit das RaspberryPi sich direkt mit einem WLAN verbindet, welches an dem Ort wo man es verwenden will, muss man die Verbindung vorher [mit dem NetworkManager einrichten](https://raspberrytips.com/raspberry-pi-wifi-setup/#set-up-your-wifi-on-raspberry-pi-os-lite) einrichten:
+Damit das RaspberryPi sich direkt mit dem WLAN am Ort wo man es verwenden will verbindet, muss man vorher die Verbindung [mit dem NetworkManager einrichten](https://raspberrytips.com/raspberry-pi-wifi-setup/#set-up-your-wifi-on-raspberry-pi-os-lite) einrichten:
 ```
 sudo nmtui
 ```
