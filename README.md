@@ -76,7 +76,7 @@ sudo nmtui
 - [node-red-contrib-modbus](https://flows.nodered.org/node/node-red-contrib-modbus) zum Schreiben der Daten mittels Modbus in den Fronius Wechselrichter
 - [node-red-contrib-buffer-parser](https://flows.nodered.org/node/node-red-contrib-buffer-parser) zum einfachen Konvertieren von Registern zu lesbaren Werten und zurück (optional)
 
-# Externer Zähler im Fronius Wechelrichter
+# Externer Zähler im Fronius Wechselrichter
 Damit im Fronius SolarWeb neben dem Fronius Wechselrichter auch ein externer Erzeuger (zB Balkonkraftwerk) oder Verbraucher (zB Ladepunkt) berücksichtigt wird, muss man diese dem Fronius Wechselrichter als externen Energiezähler (GEN24) zugänglich machen.
 
 Dazu wird ein ModbusTCP Server angelegt der den Energiezähler so simuliert, dass der Fronius Wechselrichter sich aus dem Register dieses Modbus Servers die Werte holen kann.
