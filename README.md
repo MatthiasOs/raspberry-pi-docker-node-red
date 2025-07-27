@@ -35,8 +35,7 @@ Anschließend ausloggen und neu einloggen als pi user!
 sudo exec su -l $USER
 ```
 
-## node-red als docker Container starten
-https://nodered.org/docs/getting-started/docker
+## node-red als [docker Container starten](https://nodered.org/docs/getting-started/docker)
 Ordner für Node-RED anlegen
 ```
 sudo mkdir -p ~/nodered
@@ -51,12 +50,17 @@ services:
     restart: unless-stopped
     ports:
       - "1880:1880"
-      - "502:502"
+      - "502:502" # Für Modbus
     volumes:
       - ./data:/data
-
+    environment:
+      - TZ=Europe/Berlin
 ```
-Anschließend starten:
+Optional: `docker-compose.yaml` validieren
+```
+docker-compose config
+```
+Anschließend Container starten:
 ```
 cd ~/nodered
 docker-compose up -d
@@ -79,8 +83,6 @@ Damit beim Start (boot) des Pi auch docker automatisch gestartet wird:
 sudo systemctl enable docker.service
 sudo systemctl enable containerd.service
 ```
-(Der node-red Container wird immer gestartet wenn docker gestartet wird, wenn "--restart unless-stopped" oben mitgegeben wurde)
-
 ## WLAN
 Damit das RaspberryPi sich direkt mit dem WLAN am Ort wo man es verwenden will verbindet, muss man vorher die Verbindung [mit dem NetworkManager einrichten](https://raspberrytips.com/raspberry-pi-wifi-setup/#set-up-your-wifi-on-raspberry-pi-os-lite) einrichten:
 ```
