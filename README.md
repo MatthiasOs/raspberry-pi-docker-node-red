@@ -17,8 +17,8 @@ Dauert (vorallem bei älteren Pi) sehr lange.
 
 ## Docker installieren: 
 ```
-sudo curl -fsSL https://get.docker.com -o get-docker.sh
-sudo sh get-docker.sh
+sudo curl -sSL https://get.docker.com | sh
+sudo apt install -y docker-compose
 ```
 
 In der Console prüfen ob es funktioniert hat:
@@ -31,19 +31,36 @@ Pi in docker Gruppe hinzufügen, dass man Container starten kann als pi user:
 sudo usermod -aG docker pi
 ```
 Anschließend ausloggen und neu einloggen als pi user!
+```
+sudo exec su -l $USER
+```
 
 ## node-red als docker Container starten
 https://nodered.org/docs/getting-started/docker
+Ordner für Node-RED anlegen
 ```
-sudo docker run -d --restart unless-stopped -p 1880:1880 -p 502:502 -v node_red_data:/data --name mynodered nodered/node-red
+sudo mkdir -p ~/nodered
+sudo cd ~/nodered
 ```
+docker-compose.yaml anlegen `sudo nano docker-compose.yaml`:
 ```
--d = detached (keine logs in der aktuellen shell)
--it = attached (man sieht alles in der aktuellen shell, kann diese aber dann auch nicht mehr verwenden
--p 1880:1880 (Port von Node-Red mappen und von außen zugänglich machen)
--p 502:502 (Port des ModbusTCP Server mappen und von außen zugänglich machen)
-```
+services:
+  nodered:
+    image: nodered/node-red:latest
+    container_name: nodered
+    restart: unless-stopped
+    ports:
+      - "1880:1880"
+      - "502:502"
+    volumes:
+      - ./data:/data
 
+```
+Anschließend starten:
+```
+cd ~/nodered
+docker-compose up -d
+```
 Kontrolle ob der Container läuft:
 ```
 docker ps
@@ -53,7 +70,7 @@ Im Browser die IP mit Port 1880 an surfen (zB http://192.168.178.40:1800) -> nod
 
 Zum Beenden des Containers:
 ```
-docker rm -f mynodered
+docker-compose down
 ```
 
 ## docker Einstellungen
