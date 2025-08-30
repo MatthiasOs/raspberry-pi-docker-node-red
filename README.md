@@ -3,7 +3,7 @@
 
 # Wie man ein RaspberryPi mit docker und node-red einrichtet
 
-SD Karte mit `Raspberry Imager` flashen, hier direkt ein WLAN angeben, welches man bei der weiteren Einrichtung verwenden will.
+SD Karte mit `Raspberry Imager` flashen (SSH aktivieren), hier direkt ein WLAN angeben, welches man bei der weiteren Einrichtung verwenden will.
 (Später kann man dann noch das WLAN einrichten, welches dann Vorort existiert).
 Nach der Installation per SSH auf das PI verbinden
 
