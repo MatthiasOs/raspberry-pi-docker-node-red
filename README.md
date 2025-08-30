@@ -8,12 +8,12 @@ SD Karte mit `Raspberry Imager` flashen, hier direkt ein WLAN angeben, welches m
 Nach der Installation per SSH auf das PI verbinden
 
 ## Pi updaten
+Dauert (vorallem bei älteren Pi) sehr lange.
 ```
 sudo apt update
 sudo apt upgrade
 sudo reboot
 ```
-Dauert (vorallem bei älteren Pi) sehr lange.
 
 ## Docker installieren: 
 ```
