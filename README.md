@@ -18,7 +18,7 @@ In der Console prüfen ob es funktioniert hat:
 docker
 ```
 
-User in docker Gruppe hinzufügen, dass man Container starten:
+User in docker Gruppe hinzufügen, dass man Container als aktuller User starten:
 ```
 sudo usermod -aG docker $USER
 ```
@@ -33,11 +33,11 @@ Ordner für Node-RED anlegen
 sudo mkdir -p ~/nodered
 cd ~/nodered
 ```
-docker-compose.yaml anlegen `sudo nano docker-compose.yaml`:
+docker-compose.yaml anlegen `sudo nano docker-compose.yaml` (Nicht benötigte Port Mappings löschen):
 ```
 services:
   nodered:
-    image: nodered/node-red:latest
+    image: nodered/node-red:latest-minimal
     container_name: nodered
     restart: unless-stopped
     ports:
@@ -49,7 +49,7 @@ services:
     environment:
       - TZ=Europe/Berlin
 ```
-(Nicht benötigte Port Mappings löschen)
+Zum Speichern: STRG+X -> Y -> Enter
 
 Optional: `docker-compose.yaml` validieren
 ```
@@ -57,7 +57,6 @@ docker-compose config
 ```
 Anschließend Container starten:
 ```
-cd ~/nodered
 docker-compose up -d
 ```
 Kontrolle ob der Container läuft:
