@@ -7,14 +7,6 @@ SD Karte mit `Raspberry Imager` flashen (SSH aktivieren), hier direkt ein WLAN a
 (Später kann man dann noch das WLAN einrichten, welches dann Vorort existiert).
 Nach der Installation per SSH auf das PI verbinden
 
-## Pi updaten
-Dauert (vorallem bei älteren Pi) sehr lange.
-```
-sudo apt update
-sudo apt upgrade
-sudo reboot
-```
-
 ## Docker installieren: 
 ```
 sudo curl -sSL https://get.docker.com | sh
@@ -26,20 +18,20 @@ In der Console prüfen ob es funktioniert hat:
 docker
 ```
 
-Pi in docker Gruppe hinzufügen, dass man Container starten kann als pi user:
+User in docker Gruppe hinzufügen, dass man Container starten:
 ```
-sudo usermod -aG docker pi
+sudo usermod -aG docker $USER
 ```
-Anschließend ausloggen und neu einloggen als pi user!
+Anschließend Gruppenzugehörigkeit neu laden:
 ```
-sudo exec su -l $USER
+newgrp docker
 ```
 
 ## node-red als [docker Container starten](https://nodered.org/docs/getting-started/docker)
 Ordner für Node-RED anlegen
 ```
 sudo mkdir -p ~/nodered
-sudo cd ~/nodered
+cd ~/nodered
 ```
 docker-compose.yaml anlegen `sudo nano docker-compose.yaml`:
 ```
@@ -49,13 +41,16 @@ services:
     container_name: nodered
     restart: unless-stopped
     ports:
-      - "1880:1880"
+      - "1881:1880" # Für Node-Red GUI
+      - "1883:1883" # Für MQTT
       - "502:502" # Für Modbus
     volumes:
       - ./data:/data
     environment:
       - TZ=Europe/Berlin
 ```
+(Nicht benötigte Port Mappings löschen)
+
 Optional: `docker-compose.yaml` validieren
 ```
 docker-compose config
