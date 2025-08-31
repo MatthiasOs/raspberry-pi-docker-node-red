@@ -19,6 +19,16 @@ Node-Red ist dann über den __Port 1880__ erreichbar: Beispiel: `http://192.168.
 
 Die Logs kann man über `node-red-log` sehen
 
+### Starten nodered
+```
+ node-red-start
+```
+alternative
+```
+sudo systemctl enable nodered.service
+```
+to autostart Node-RED at every boot
+
 ### Ändern des Ports
 Wenn man den standard Port ändern will muss man die `settings.js` editieren
 ```
