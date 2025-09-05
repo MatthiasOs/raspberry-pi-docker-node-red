@@ -20,16 +20,16 @@ Node-Red ist dann über den __Port 1880__ erreichbar: Beispiel: `http://192.168.
 Die Logs kann man über `node-red-log` sehen
 
 ### Starten nodered
+Einmaliges Starten_
 ```
  node-red-start
 ```
-alternative
+Damit node-red direkt beim Start des RaspberryPis auch startet:
 ```
  systemctl enable nodered.service
 ```
-to autostart Node-RED at every boot
 
-### Ändern des Ports
+### Ändern des Node-Red UI Ports
 Wenn man den standard Port ändern will muss man die `settings.js` editieren
 ```
 nano ~/.node-red/settings.js
@@ -39,16 +39,6 @@ Folgende Zeile ggf einkommentieren und den Port anpassen:
 uiPort: process.env.PORT || 1881,
 ```
 Speichern und Schließen: STRG+X -> Y -> Enter
-P
-
-Port freigabe 502 über putty
-```
-sudo setcap 'cap_net_bind_service=+ep' /usr/bin/node
-```
-Node-Red neustarten
-```
-node-red-restart
-```
 
 ## WLAN (optional)
 Damit das RaspberryPi sich direkt mit dem WLAN am Ort wo man es verwenden will verbindet, muss man vorher die Verbindung [mit dem NetworkManager einrichten](https://raspberrytips.com/raspberry-pi-wifi-setup/#set-up-your-wifi-on-raspberry-pi-os-lite) einrichten:
@@ -69,6 +59,16 @@ Dazu wird ein ModbusTCP Server angelegt der den Energiezähler so simuliert, das
 In die Register des Modbus Server muss man neben Standardwerte zur Identifikation als Energiezähler noch den benötigten `AC Power value (Total) [W]` des Erzeugers/Verbrauchers in die dafür vorgesehen Register schreiben.
 Die Register Mappings können [hier von Fronius](https://www.fronius.com/QR-link/0006) runtergeladen werden, oder siehe im [Anhang](Meter_Register_Map_Float_v1.0.xlsx).
 (Beachten ob im Fronius Wechselrichter "Float" oder "Int+SF" eingestellt ist!)
+
+## Modbus Port
+Fornius erwartet den Modbus Server auf Port 502. Da in Linux Ports <= 1024 eigentlich nur vom Root benutzt werden dürfen, muss man die Port Freigabe erlauben:
+```
+sudo setcap 'cap_net_bind_service=+ep' /usr/bin/node
+```
+Anschließend Node-Red neustarten:
+```
+node-red-restart
+```
 
 # Variante 1: externer Erzeuger (zB Balkonwechselrichter)
 In node-red den [Flow](shelly_pv_erzeuger_flow.json) (angelehnt an diesen [flow aus dem node-red Forum](https://discourse.nodered.org/t/simulate-a-modbus-tcp-server-and-feed-registers/78763)) importieren.
