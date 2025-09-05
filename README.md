@@ -25,7 +25,7 @@ Die Logs kann man über `node-red-log` sehen
 ```
 alternative
 ```
-sudo systemctl enable nodered.service
+ systemctl enable nodered.service
 ```
 to autostart Node-RED at every boot
 
@@ -39,7 +39,12 @@ Folgende Zeile ggf einkommentieren und den Port anpassen:
 uiPort: process.env.PORT || 1881,
 ```
 Speichern und Schließen: STRG+X -> Y -> Enter
+P
 
+Port freigabe 502 über putty
+```
+sudo setcap 'cap_net_bind_service=+ep' /usr/bin/node
+```
 Node-Red neustarten
 ```
 node-red-restart
