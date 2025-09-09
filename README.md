@@ -20,7 +20,7 @@ Node-Red ist dann über den __Port 1880__ erreichbar: Beispiel: `http://192.168.
 Die Logs kann man über `node-red-log` sehen
 
 ### Starten nodered
-Einmaliges Starten_
+Einmaliges Starten:
 ```
  node-red-start
 ```
@@ -30,7 +30,7 @@ Damit node-red direkt beim Start des RaspberryPis auch startet:
 ```
 
 ### Ändern des Node-Red UI Ports
-Wenn man den standard Port ändern will muss man die `settings.js` editieren
+Wenn man den standard Port ändern will muss man die `settings.js` editieren:
 ```
 nano ~/.node-red/settings.js
 ```
@@ -61,7 +61,7 @@ Die Register Mappings können [hier von Fronius](https://www.fronius.com/QR-link
 (Beachten ob im Fronius Wechselrichter "Float" oder "Int+SF" eingestellt ist!)
 
 ## Modbus Port
-Fornius erwartet den Modbus Server auf Port 502. Da in Linux Ports <= 1024 eigentlich nur vom Root benutzt werden dürfen, muss man die Port Freigabe erlauben:
+Fronius erwartet den Modbus Server auf Port 502. Da in Linux Ports <= 1024 eigentlich nur vom Root benutzt werden dürfen, muss man die Port Freigabe erlauben:
 ```
 sudo setcap 'cap_net_bind_service=+ep' /usr/bin/node
 ```
